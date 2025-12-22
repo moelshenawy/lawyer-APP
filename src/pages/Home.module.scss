@@ -1,0 +1,346 @@
+.page {
+  max-width: 450px;
+  margin: 0 auto;
+  min-height: 100vh;
+  width: 100%;
+  padding: 8px 0 120px;
+  background: #ffffff;
+  color: #1f2937;
+  text-align: right;
+}
+
+.banner {
+  background: #2f8f46;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 16px;
+  margin: 0 -16px;
+  border-radius: 0;
+}
+
+.bannerText {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.bannerActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  direction: ltr;
+}
+
+.bannerBtn {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.iconBox {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #ffffff;
+  display: grid;
+  place-items: center;
+  color: inherit;
+
+  svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.reject {
+  color: #dc2626;
+}
+
+.accept {
+  color: #22c55e;
+
+  span {
+    display: flex;
+    img {
+      margin: auto;
+      width: 12px;
+      height: 12px;
+      object-fit: contain;
+    }
+  }
+}
+
+.topBar {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.userText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+  color: #8a8a8a;
+
+  strong {
+    color: #1f2937;
+    font-size: 16px;
+    font-weight: 700;
+  }
+}
+
+.logoBadge {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #0b3e6f;
+  border: 1px solid #e6e6e6;
+  display: grid;
+  place-items: center;
+
+  svg {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+.topIcons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.iconButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid #e6e6e6;
+  background: #ffffff;
+  color: #6b7280;
+  display: grid;
+  place-items: center;
+  position: relative;
+  cursor: pointer;
+
+  svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.dot {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #ef4444;
+}
+
+.section {
+  margin-top: 22px;
+}
+
+.sectionTitle {
+  margin: 0 0 14px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #000000;
+}
+
+.notificationList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.notificationCard {
+  background: #f9f9f9;
+
+  border-radius: 18px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.notificationText {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.notificationTitle {
+  color: #003f6f;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.notificationMessage {
+  margin: 0;
+  color: #7b7b7b;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.notificationIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.taskGroups {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.taskGroup {
+  border-radius: 18px;
+  border: 1px solid #cccccc;
+  background: #f9f9f9;
+
+  padding: 16px;
+}
+
+.taskGroupHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+
+  h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+}
+
+.moreLink {
+  border: none;
+  background: transparent;
+  color: var(--color-primary);
+  font-size: 10px;
+  font-weight: 400;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.taskList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.taskCard {
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+  padding: 14px;
+  background: #ffffff;
+}
+
+.taskMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.taskBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #fff4d1;
+  color: #d89b00;
+  font-size: 12px;
+  font-weight: 600;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.taskAge {
+  color: #9aa0a6;
+  font-size: 13px;
+}
+
+.taskTitle {
+  margin: 0 0 8px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.taskDescription {
+  margin: 0;
+  color: #9aa0a6;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.taskFooter {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #efefef;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.deadlineLabel {
+  color: #003f6f;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.deadlineInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #003f6f;
+  font-size: 13px;
+}
+
+.deadlineItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}

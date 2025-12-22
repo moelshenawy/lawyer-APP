@@ -1,0 +1,13 @@
+{
+  "pageTitle": "My Tasks",
+  "tabAll": "All",
+  "tabActive": "Active",
+  "tabPaused": "Paused",
+  "tabCompleted": "Completed",
+  "tabCanceled": "Canceled",
+  "fetchFailed": "Failed to fetch orders",
+  "searchPlaceholder": "Search for an order (case name, order number, service type)",
+  "lastUpdated": "Last updated:",
+  "orderNumber": "Order number: #{{number}}",
+  "addOrder": "Add order"
+}

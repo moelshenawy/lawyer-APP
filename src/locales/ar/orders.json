@@ -1,0 +1,13 @@
+{
+  "": "مهماتي",
+  "tabAll": "الكل",
+  "tabActive": "نشطة",
+  "tabPaused": "معلقة",
+  "tabCompleted": "مكتملة",
+  "tabCanceled": "ملغاة",
+  "fetchFailed": "فشل في جلب الطلبات",
+  "searchPlaceholder": "البحث عن طلب (اسم القضية، رقم الطلب، نوع الخدمة)",
+  "lastUpdated": "آخر تحديث:",
+  "orderNumber": "رقم الطلب: #{{number}}",
+  "addOrder": "add order"
+}

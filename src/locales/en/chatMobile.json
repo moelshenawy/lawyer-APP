@@ -1,0 +1,24 @@
+{
+  "aiName": "Legal Assistant",
+  "botIntro": "Hello, I'm your legal assistant. Ask me anything about your case, and I'll guide you step by step.",
+  "newChatIntro": "Sure, let's start a new conversation. What would you like to know?",
+  "quickReplies": [
+    "Book a consultation",
+    "Tell me about your services",
+    "What documents do I need?",
+    "How do I talk to a lawyer?"
+  ],
+  "historyButton": "Load previous messages",
+  "historyLoading": "Loading conversation...",
+  "inputPlaceholder": "Type your question...",
+  "sendButton": "Send",
+  "replyFallback": "Sorry, something went wrong. Please try again.",
+  "quickRepliesDesktop": [
+    "Book a consultation",
+    "Tell me about your services",
+    "What documents do I need?",
+    "How do I talk to a lawyer?",
+    "How do I submit a request?",
+    "Tell me about pricing"
+  ]
+}

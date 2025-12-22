@@ -1,0 +1,100 @@
+section.hero {
+  @media screen and (min-width: 768px) {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .hero_wrapper {
+    // border-radius: 8px;
+    position: relative;
+    padding: 16px 14px;
+
+    @media screen and (min-width: 768px) {
+      height: 436.6666564941406px;
+      border-radius: 0;
+    }
+
+    .text_container {
+      @media screen and (min-width: 768px) {
+        margin-top: 100px;
+        p {
+          width: 100%;
+          text-align: center;
+          font-weight: 700;
+          font-size: 26px;
+        }
+
+        h3 {
+          font-size: 33.33px;
+          font-weight: 800;
+        }
+
+        .icon {
+          width: 37px;
+          height: 37px;
+        }
+      }
+
+      @media screen and (max-width: 768px) {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+    }
+  }
+
+  .hero_bg {
+  }
+
+  .hero_content {
+  }
+
+  .title_container {
+    h3 {
+      color: #fff;
+      font-weight: 600;
+    }
+  }
+
+  .username {
+  }
+
+  .subtitle {
+    color: #f3f3f3;
+    line-height: 1.8;
+
+    span {
+      color: var(--color-gold);
+      font-weight: 600;
+    }
+  }
+
+  .office_name {
+  }
+
+  .slogan {
+  }
+
+  .buttons {
+    @media screen and (min-width: 768px) {
+      width: 100%;
+    }
+    button {
+      padding: 11px 16px;
+      font-size: 12px;
+
+      @media screen and (min-width: 768px) {
+        &:last-child {
+          display: none;
+          align-self: center;
+        }
+      }
+    }
+  }
+
+  .primary_btn {
+  }
+
+  .secondary_btn {
+  }
+}

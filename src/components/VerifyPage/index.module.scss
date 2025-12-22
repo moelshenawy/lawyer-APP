@@ -1,0 +1,156 @@
+.verifyWrapper {
+  min-height: 100vh;
+  background: #ffffff;
+  font-family: var(--font-arabic);
+  display: flex;
+  align-items: flex-start;
+  padding-top: 18px;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.backBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid #e8edf2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #0d2b49;
+  background: #fff;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background: #f1f6fb;
+  }
+}
+
+.card {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+}
+
+.logoWrap {
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
+  width: 82px;
+  height: auto;
+}
+
+.desc {
+  color: #0d2b49;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-top: 6px;
+  max-width: 320px;
+}
+
+.inputsRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  width: 100%;
+  max-width: 320px;
+  justify-items: center;
+  margin-top: 12px;
+}
+
+.digitInput {
+  width: 62px;
+  height: 62px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  color: #0d2b49;
+  border-radius: 12px;
+  border: 1px solid #e1e7ee;
+  background: #f7f9fb;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+
+  &:focus {
+    border-color: #0d2b49;
+    box-shadow: 0 0 0 3px rgba(13, 43, 73, 0.12);
+    background: #fff;
+  }
+}
+
+.actions {
+  width: 100%;
+  max-width: 360px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.primaryBtn,
+.outlineBtn {
+  border-radius: 10px;
+  padding: 12px;
+  font-weight: 700;
+  font-size: 15px;
+  transition: transform 0.1s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.primaryBtn {
+  background: #0d2b49;
+  color: #ffffff;
+  border: 1px solid #0d2b49;
+  box-shadow: 0 8px 16px rgba(13, 43, 73, 0.15);
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(13, 43, 73, 0.18);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
+}
+
+.outlineBtn {
+  background: transparent;
+  color: #0d2b49;
+  border: 1px solid #0d2b49;
+
+  &:hover {
+    background: #f1f6fb;
+  }
+}
+
+@media (min-width: 768px) {
+  .verifyWrapper {
+    align-items: center;
+    padding-top: 40px;
+  }
+
+  .card {
+    margin: 0 auto;
+    max-width: 440px;
+    padding: 12px 10px 6px;
+  }
+
+  .inputsRow {
+    gap: 16px;
+  }
+
+  .actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

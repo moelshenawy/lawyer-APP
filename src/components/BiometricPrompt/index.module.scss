@@ -1,0 +1,156 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+  z-index: 1200;
+}
+
+.card {
+  width: min(420px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  color: #0f2538;
+}
+
+.fingerprintBox {
+  width: 188px;
+  height: 188px;
+  border: 1px dashed #0d477c;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4f8fc;
+  padding: 24px;
+}
+
+.fingerprintBox img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: #4d4d4d;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.list {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style-position: inside;
+  display: grid;
+  gap: 8px;
+  font-size: 15px;
+  line-height: 1.6;
+  text-align: right;
+  color: #0f2538;
+
+  padding-right: 10px;
+  li {
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: -10px;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      background-color: black;
+      border-radius: 50%;
+    }
+  }
+}
+
+.actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-direction: row-reverse;
+  margin-top: 8px;
+}
+
+.primaryBtn {
+  background: #003f6f;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  min-width: 140px;
+  font-weight: 700;
+  font-size: 15px;
+  box-shadow: 0 4px 10px rgba(0, 63, 111, 0.1);
+  cursor: pointer;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.secondaryBtn {
+  background: #ffffff;
+  color: #003f6f;
+  border: 1px solid #003f6f;
+  border-radius: 10px;
+  padding: 12px 24px;
+  min-width: 140px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.primaryBtn:active,
+.secondaryBtn:active {
+  transform: translateY(1px);
+}
+
+.success {
+  width: min(420px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.successGif {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.successText {
+  font-size: 20px;
+  font-weight: 800;
+  color: #16a34a;
+  margin: 0;
+}
+
+.successToken {
+  font-size: 14px;
+  color: #0f2538;
+  margin: 0;
+  word-break: break-all;
+}

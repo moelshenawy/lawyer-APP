@@ -1,0 +1,17 @@
+{
+  "logoutLoading": "Logging out...",
+  "logoutSuccess": "Logged out successfully",
+  "logoutError": "An error occurred while logging out",
+  "packageEndsAt": "Package ends on 2.20.2025",
+  "lawyerName": "Lawyer / Fawaz Alhashmi",
+  "account": "My account",
+  "consultations": "Consultations",
+  "appointments": "Appointments",
+  "orders": "My Tasks",
+  "packages": "Packages",
+  "contact": "Contact us",
+  "inviteFriend": "Send an invite to a friend",
+  "logout": "Log out",
+  "changePassword": "Change password",
+  "help": "Help"
+}

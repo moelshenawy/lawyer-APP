@@ -1,0 +1,48 @@
+.user {
+  .sec_container {
+  }
+
+  .user_info {
+    .img_container {
+    }
+
+    .text_container {
+      .welcome {
+        font-size: 10px;
+        font-weight: 400;
+      }
+
+      .username {
+        P {
+          font-size: 12px;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+
+  .sys_icons {
+    display: flex;
+    align-items: center;
+
+    .notifButton {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+    }
+
+    .dot {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: 8px;
+      height: 8px;
+      background: #eb5757;
+      border-radius: 50%;
+      box-shadow: 0 0 0 2px #fff;
+    }
+  }
+}

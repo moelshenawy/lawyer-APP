@@ -1,0 +1,43 @@
+.notifications_card {
+  .sec_container {
+    border-bottom: 1px solid #e6e6e6;
+    padding: 8px 16px 10px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .text_container {
+      .title {
+        p {
+          color: black;
+          font-size: 14px;
+          font-weight: 400;
+        }
+      }
+
+      .desc {
+        p {
+          color: var(--color-gray-100);
+          font-weight: 400;
+          font-size: 12px;
+        }
+      }
+    }
+
+    button {
+      padding: 11px 43px;
+      font-size: 12px;
+    }
+  }
+  h2 {
+    font-size: 16px;
+    color: black;
+  }
+
+  h4 {
+    color: var(--color-primary);
+    font-size: 16px;
+    font-weight: 700;
+  }
+}

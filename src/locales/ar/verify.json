@@ -1,0 +1,16 @@
+{
+  "enterFullCode": "يرجى إدخال الكود بالكامل",
+  "verifyCodeFailed": "تعذر تأكيد الكود",
+  "loginSuccess": "تم تسجيل الدخول بنجاح",
+  "missingLoginToken": "لم يتم استلام رمز الدخول",
+  "genericErrorTryAgain": "حدث خطأ، حاول مرة أخرى",
+  "resendMissingLoginData": "تعذر إعادة الإرسال دون بيانات الدخول",
+  "resendFailed": "تعذر إعادة الإرسال",
+  "resendSuccess": "تم إعادة إرسال الكود",
+  "resendError": "حدث خطأ أثناء إعادة الإرسال",
+  "back": "رجوع",
+  "codeDigitAria": "رقم الكود {{number}}",
+  "descriptionPrefix": "   تم إرسال كود إلي الحساب الخاص بك",
+  "resendLink": "إعادة إرسال الرابط",
+  "confirmCode": "تأكيد الكود"
+}

@@ -1,0 +1,16 @@
+{
+  "enterFullCode": "Please enter the full code",
+  "verifyCodeFailed": "Could not confirm the code",
+  "loginSuccess": "Logged in successfully",
+  "missingLoginToken": "Login token was not received",
+  "genericErrorTryAgain": "Something went wrong. Please try again.",
+  "resendMissingLoginData": "Cannot resend without login data",
+  "resendFailed": "Could not resend",
+  "resendSuccess": "Code resent successfully",
+  "resendError": "An error occurred while resending",
+  "back": "Back",
+  "codeDigitAria": "Code digit {{number}}",
+  "descriptionPrefix": "An email has been sent to your account.",
+  "resendLink": "Resend link",
+  "confirmCode": "Confirm code"
+}

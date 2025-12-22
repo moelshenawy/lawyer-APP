@@ -1,0 +1,39 @@
+.reminder_card {
+  .sec_container {
+    border-bottom: 1px solid #e6e6e6;
+    padding: 8px 16px 10px;
+    border-radius: 16px;
+
+    background: #EEF8FF;
+
+  }
+  h2 {
+    font-size: 16px;
+    color: black;
+  }
+
+  h4 {
+    color: var(--color-primary);
+    font-size: 16px;
+    font-weight: 700;
+    
+  }
+  .details {
+    margin-bottom: 24px;
+    span {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--color-gray-100);
+    }
+  }
+
+  .footer {
+    padding-bottom: 16px;
+
+    p {
+      // color: var(--color-gray-100);
+      font-weight: 400;
+      font-size: 16px;
+    }
+  }
+}

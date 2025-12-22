@@ -1,0 +1,17 @@
+{
+  "logoutLoading": "جاري تسجيل الخروج...",
+  "logoutSuccess": "تم تسجيل الخروج بنجاح",
+  "logoutError": "حدث خطأ أثناء تسجيل الخروج",
+  "packageEndsAt": "تنتهي الباقة في 2.20.2025",
+  "lawyerName": "المحامي / فواز الهاشمي",
+  "account": "حسابي",
+  "consultations": "الاستشارات",
+  "appointments": "مواعيدي",
+  "orders": "مهماتي",
+  "packages": " الباقات",
+  "contact": "تواصل معنا",
+  "inviteFriend": "ارسال دعوة الى صديق",
+  "logout": "تسجيل خروج",
+  "changePassword": "تغيير كلمة السر",
+  "help": "المساعدة"
+}

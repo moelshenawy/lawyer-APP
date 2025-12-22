@@ -1,0 +1,12 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+body {
+  @apply bg-gray-50 text-gray-900;
+}
+
+
+
+audio-react-recorder canvas {
+  display: block !important;
+}

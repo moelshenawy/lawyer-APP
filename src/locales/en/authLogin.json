@@ -1,0 +1,20 @@
+{
+  "biometricLoginSuccess": "Logged in with fingerprint!",
+  "loginRequired": "Please enter your email or phone number",
+  "loginInvalid": "Invalid email or phone number format",
+  "passwordRequired": "Please enter your password",
+  "passwordMin": "Password must be at least 8 characters",
+  "loginRequestLoading": "Sending login request...",
+  "loginFailed": "Unable to log in",
+  "codeSentToEmail": "The code has been sent to your email",
+  "loginLabel": "Email / Phone number",
+  "passwordLabel": "Password",
+  "forgotPassword": "Forgot your password?",
+  "loggingIn": "Logging in...",
+  "login": "Log in",
+  "noAccount": "Don't have an account? ",
+  "createAccount": "Create account",
+  "or": "or",
+  "fingerprintLogin": "Login with fingerprint",
+  "fingerprintLoginLoading": "Logging in with fingerprint..."
+}

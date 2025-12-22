@@ -1,0 +1,18 @@
+{
+  "sortAz": "Alphabetical (A - Z)",
+  "sortZa": "Alphabetical (Z - A)",
+  "errorSelectService": "Could not select the service. Please try again.",
+  "errorCreateOrderLater": "Could not create the order. Please try again later.",
+  "currencySar": "SAR",
+  "errorCreateOrderTryAgain": "Could not create the order. Please try again.",
+  "thisService": "this service",
+  "subscribeConfirmTitle": "Do you want to subscribe to {{serviceTitle}}?",
+  "eyebrow": "Services",
+  "title": "Legal services",
+  "subtitle": "Browse all available legal services, and search or sort the list the way that suits you.",
+  "searchPlaceholder": "Search by service name...",
+  "empty": "No services match your search right now.",
+  "loading": "Loading...",
+  "yes": "Yes",
+  "no": "No"
+}

@@ -1,0 +1,20 @@
+{
+  "biometricLoginSuccess": "تم تسجيل الدخول بالبصمة!",
+  "loginRequired": "يرجى إدخال البريد الإلكتروني أو رقم الجوال",
+  "loginInvalid": "صيغة البريد أو رقم الجوال غير صحيحة",
+  "passwordRequired": "يرجى إدخال كلمة المرور",
+  "passwordMin": "كلمة المرور يجب ألا تقل عن 8 أحرف",
+  "loginRequestLoading": "جاري إرسال طلب تسجيل الدخول...",
+  "loginFailed": "تعذر تسجيل الدخول",
+  "codeSentToEmail": "تم إرسال الكود إلى بريدك الإلكتروني",
+  "loginLabel": "البريد الإلكتروني/ رقم الجوال",
+  "passwordLabel": "كلمة المرور",
+  "forgotPassword": "هل نسيت كلمة المرور ؟",
+  "loggingIn": "جاري الدخول...",
+  "login": "تسجيل الدخول",
+  "noAccount": "ليس لديك حساب؟ ",
+  "createAccount": "إنشاء حساب",
+  "or": "أو",
+  "fingerprintLogin": "تسجيل الدخول بالبصمة",
+  "fingerprintLoginLoading": "جاري تسجيل الدخول بالبصمة..."
+}
