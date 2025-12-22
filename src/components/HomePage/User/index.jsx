@@ -30,29 +30,20 @@ const User = () => {
               </div>
 
               <div className={styles.username}>
-                <p>{firstName}</p>
+                <p>{firstName} /محامى</p>
               </div>
             </div>
           </div>
 
           <div className={`flex gap-3 ${styles.sys_icons}`}>
-            <Link
-              to={notificationPath}
-              className={styles.notifButton}
-              aria-label="Notification"
-            >
+            <Link to={notificationPath} className={styles.notifButton} aria-label="Notification">
               <Notification size={20} active={isNotificationActive} />
               {!isNotificationActive && <span className={styles.dot} />}
             </Link>
 
-                        <Link
-              to={`${base}/chat`}
-              className={styles.notifButton}
-              aria-label="chat"
-            >
-            <img src="/assets/icons/message.svg" alt="message" width={20} />
+            <Link to={`${base}/chat`} className={styles.notifButton} aria-label="chat">
+              <img src="/assets/icons/message.svg" alt="message" width={20} />
             </Link>
-
           </div>
         </div>
       </div>
