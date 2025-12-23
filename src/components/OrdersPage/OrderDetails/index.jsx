@@ -8,7 +8,7 @@ import "swiper/css/free-mode";
 import Reminders from "@/components/HomePage/Reminders";
 import Sidebar from "@/components/AcoountPage/Sidebar";
 import Skeleton from "@/components/Skeleton";
-import { useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import AppointmentsCard from "./AppointmentsCard";
 import DocumentsTap from "./DocumentsTap";
 import PaymentsTap from "./PaymentsTap";
@@ -18,6 +18,7 @@ import HearingCard from "./HearingCard";
 import RequestedInformationSection from "./RequestedInformationSection";
 import stylesEmpty from "./RequestedInformationSection.module.scss";
 import { useTranslation } from "react-i18next";
+import homeStyles from "@/pages/Home.module.scss";
 
 const API_BASE = (
   import.meta.env.VITE_API_BASE_URL || "https://fawaz-law-firm.apphub.my.id/api"
@@ -29,8 +30,32 @@ const getStoredUserToken = () => {
   return window.localStorage.getItem("access_token");
 };
 
+const TaskFlagIcon = () => (
+  <svg viewBox="0 0 16 16" aria-hidden="true">
+    <path d="M3 2.5V13.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    <path d="M4.5 3h7l-1.6 2 1.6 2h-7V3Z" fill="currentColor" />
+  </svg>
+);
+
+const TaskCalendarIcon = () => (
+  <svg viewBox="0 0 20 20" aria-hidden="true">
+    <rect x="3" y="4.5" width="14" height="12" rx="2" fill="none" stroke="currentColor" />
+    <path d="M3 7.5h14" stroke="currentColor" />
+    <path d="M6.2 3v3M13.8 3v3" stroke="currentColor" strokeLinecap="round" />
+  </svg>
+);
+
+const TaskClockIcon = () => (
+  <svg viewBox="0 0 20 20" aria-hidden="true">
+    <circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" />
+    <path d="M10 6.2v4.2l2.8 1.6" stroke="currentColor" strokeLinecap="round" />
+  </svg>
+);
+
 const OrderDetails = () => {
-  const { id } = useParams();
+  const { id, lng } = useParams();
+  const base = `/${lng || "ar"}`;
+  const location = useLocation();
   const { t } = useTranslation("orderDetails");
   const [activeTab, setActiveTab] = useState("details");
   const [orderData, setOrderData] = useState(null);
@@ -117,6 +142,9 @@ const OrderDetails = () => {
   const requested_information = orderData?.requested_information || [];
 
   const tabs = useMemo(() => TAB_ITEMS, [TAB_ITEMS]);
+  const taskCard =
+    location?.state?.from === "tasks" && location?.state?.task ? location.state.task : null;
+  const showAnalysisButton = location?.state?.from === "cases";
 
   return (
     <>
@@ -145,6 +173,43 @@ const OrderDetails = () => {
             <div className={styles.nextBanner}>
               <img src="/assets/icons/shape.svg" alt="shape icon" width={22} />
               <p>{info.notification}</p>
+            </div>
+          ) : null}
+
+          {taskCard ? (
+            <div className="mt-3">
+              <div className={homeStyles.taskCard}>
+                <div className={homeStyles.taskMeta}>
+                  <span className={homeStyles.taskBadge}>
+                    {taskCard.priority}
+                    <TaskFlagIcon />
+                  </span>
+                  <span className={homeStyles.taskAge}>{taskCard.age}</span>
+                </div>
+                <h4 className={homeStyles.taskTitle}>{taskCard.title}</h4>
+                <p className={homeStyles.taskDescription}>{taskCard.description}</p>
+                <div className={homeStyles.taskFooter}>
+                  <span className={homeStyles.deadlineLabel}>موعد التسليم</span>
+                  <div className={homeStyles.deadlineInfo}>
+                    <span className={homeStyles.deadlineItem}>
+                      <TaskCalendarIcon />
+                      {taskCard.date}
+                    </span>
+                    <span className={homeStyles.deadlineItem}>
+                      <TaskClockIcon />
+                      {taskCard.time}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : null}
+
+          {showAnalysisButton ? (
+            <div className="mt-3">
+              <Link to={`${base}/analysis/${id}`} className={styles.analysisBtn}>
+                تحليل القضية
+              </Link>
             </div>
           ) : null}
 

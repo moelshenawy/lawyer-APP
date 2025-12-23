@@ -2,12 +2,7 @@
   background: #fff;
   padding: 100px 0 32px;
   min-height: 100vh;
-  @media (max-width: 768px) {
-    padding-top: 80px;
-  }
-  @media (max-width: 450px) {
-padding-top: 10px;
-  }
+  padding-top: 10px;
 }
 
 .shell {
@@ -87,7 +82,9 @@ padding-top: 10px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .itemLink:hover .item {

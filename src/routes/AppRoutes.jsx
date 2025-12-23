@@ -7,14 +7,13 @@ import Login from "@/pages/auth/Login";
 import Register from "@/pages/auth/Register";
 import Orders from "@/pages/Orders";
 import OrderDetails from "@/pages/OrderDetails";
-import Accounts from "@/pages/Accounts";
+import CaseAnalysis from "@/pages/CaseAnalysis";
 import Ai from "@/pages/Ai";
 import Chat from "@/pages/Chat";
 import Appointments from "@/pages/Appointments";
 import Consultation from "@/pages/Consultation";
 import LanguageWrapper from "@/routes/LanguageWrapper";
 import Packages from "@/pages/Packages";
-import ChangePassword from "@/pages/ChangePassword";
 import Contact from "@/pages/Contact";
 import Verify from "@/pages/auth/Verify";
 import Service from "@/pages/Service";
@@ -54,6 +53,7 @@ const AppRoutes = createBrowserRouter([
               { index: true, element: <Home /> },
               { path: "tasks", element: <Orders /> },
               { path: "/:lng/task/:id", element: <OrderDetails /> },
+              { path: "analysis/:id", element: <CaseAnalysis /> },
               { path: "appointments", element: <Appointments /> },
               { path: "consultation", element: <Consultation /> },
               { path: "account-settings", element: <AccountSettingsPage /> },

@@ -133,7 +133,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`${styles.navbar} ${isDesktop && isHidden ? styles.hiddenDesktop : ""}`}>
+    <nav className={`${styles.navbar}  ${isDesktop && isHidden ? styles.hiddenDesktop : ""}`}>
       <div className={`${styles.sec_container} container flex justify-between items-center`}>
         {/* Desktop Logo */}
 
@@ -154,23 +154,23 @@ const Navbar = () => {
           })}
         </div> */}
         {/* Mobile Navigation */}
-        <div className={`${styles.mobileNav} ${!isDesktop && isHidden ? styles.hiddenMobile : ""}`}>
+        <div
+          className={`${styles.mobileNav} container  ${!isDesktop && isHidden ? styles.hiddenMobile : ""}`}
+        >
           <div className="container flex justify-between items-center md:gap-[26px]">
-            {(isDesktop ? navItems.filter((n) => !n.path.endsWith("/ai")) : navItems).map(
-              (item) => {
-                const isActive = location.pathname === item.path;
-                return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    className={`${styles.mobileItem} ${isActive ? styles.active : ""}`}
-                  >
-                    <span className={styles.icon}>{item.icon(isActive)}</span>
-                    <span className={styles.label}>{item.label}</span>
-                  </Link>
-                );
-              },
-            )}
+            {navItems.map((item) => {
+              const isActive = location.pathname === item.path;
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`${styles.mobileItem} ${isActive ? styles.active : ""}`}
+                >
+                  <span className={styles.icon}>{item.icon(isActive)}</span>
+                  <span className={styles.label}>{item.label}</span>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>

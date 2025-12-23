@@ -65,7 +65,7 @@ export default function MainLayout() {
         </main>
 
         {/* ChatBot only if user is subscribed + not in ai/chat */}
-        {user?.is_subscribed && !shouldHideChatBot && <ChatBot />}
+        {/* {user?.is_subscribed && !shouldHideChatBot && <ChatBot />} */}
 
         {/* Footer */}
         {/* {!shouldHideFooter && <Footer />} */}
