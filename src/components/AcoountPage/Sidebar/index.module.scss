@@ -50,6 +50,13 @@
   max-width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
+
+  @media screen and (min-width: 1200px) {
+    max-width: 100vw;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+  }
 }
 
 .profileBody {

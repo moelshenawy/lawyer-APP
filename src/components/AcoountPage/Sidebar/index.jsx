@@ -10,6 +10,7 @@ import { AuthContext } from "@/context/AuthContext";
 import { toast } from "react-hot-toast";
 import { FiLogOut } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
+
 const URL_OUT_BASE = import.meta.env.VITE_OUT_BASE_URL;
 
 const Sidebar = ({ hideOnMobile = false, variant = "default" }) => {
