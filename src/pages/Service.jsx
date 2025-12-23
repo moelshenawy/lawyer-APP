@@ -104,7 +104,7 @@ const ServicePage = () => {
         import.meta.env.VITE_PAYMENT_BASE_URL || "https://fawaz-law-firm.apphub.my.id";
 
       if (!invoice) {
-        navigate(`/${lang}/orders/${orderId}`);
+        navigate(`/${lang}/task/${orderId}`);
         closePopup();
         return;
       }

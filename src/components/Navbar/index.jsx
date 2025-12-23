@@ -15,8 +15,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { lng } = useParams();
   const base = `/${lng || "ar"}`;
-  const notificationPath = `${base}/notification`;
-  const isNotificationActive = location.pathname.endsWith("/notification");
   const [isDesktop, setIsDesktop] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
@@ -123,7 +121,7 @@ const Navbar = () => {
       icon: (isActive) => <Home active={isActive} />,
     },
     {
-      path: `${base}/orders`,
+      path: `${base}/tasks`,
       label: t("navOrders"),
       icon: (isActive) => <Orders active={isActive} />,
     },

@@ -120,173 +120,165 @@ const OrderDetails = () => {
 
   return (
     <>
-      <div className="relative flex flex-col  md:flex-row items-start justify-between w-full my-0 md:my-[158px]  gap-5">
-        <Sidebar hideOnMobile />
-
-        {errStatus !== 200 ? (
-          <ErrorState message={error} onRetry={fetchOrder} />
-        ) : (
-          <section id="order-details" className={`pb-24 ${styles.details}`}>
-            {/* Header */}
-            <div className="flex items-center justify-between gap-3 mt-2 mb-2">
-              {loading ? (
-                <Skeleton variant="title" width="45%" height={28} />
-              ) : (
-                <PageHeader title={info?.title} />
-              )}
-              {loading ? (
-                <Skeleton variant="rect" height={26} width={85} radius={12} />
-              ) : (
-                <div className={`${styles.chip} ${styles.postponed} ${info?.status}`}>
-                  {info?.status_label}
-                </div>
-              )}
-            </div>
+      {errStatus !== 200 ? (
+        <ErrorState message={error} onRetry={fetchOrder} />
+      ) : (
+        <section id="order-details" className={`pb-24 ${styles.details}`}>
+          {/* Header */}
+          <div className="flex items-center justify-between gap-3 mt-2 mb-2">
             {loading ? (
-              <Skeleton variant="rect" height={10} radius={16} />
-            ) : info?.notification ? (
-              <div className={styles.nextBanner}>
-                <img src="/assets/icons/shape.svg" alt="shape icon" width={22} />
-                <p>{info.notification}</p>
+              <Skeleton variant="title" width="45%" height={28} />
+            ) : (
+              <PageHeader title={info?.title} />
+            )}
+            {loading ? (
+              <Skeleton variant="rect" height={26} width={85} radius={12} />
+            ) : (
+              <div className={`${styles.chip} ${styles.postponed} ${info?.status}`}>
+                {info?.status_label}
               </div>
-            ) : null}
-
-            <div className="mt-3">
-              <Reminders orderData={orderData?.info} loading={loading} />
+            )}
+          </div>
+          {loading ? (
+            <Skeleton variant="rect" height={10} radius={16} />
+          ) : info?.notification ? (
+            <div className={styles.nextBanner}>
+              <img src="/assets/icons/shape.svg" alt="shape icon" width={22} />
+              <p>{info.notification}</p>
             </div>
+          ) : null}
 
-            {/* Tabs */}
-            <div className="mt-3">
-              <Swiper
-                modules={[FreeMode]}
-                freeMode
-                slidesPerView="auto"
-                spaceBetween={8}
-                dir="rtl"
-                className={styles.tabs}
-              >
-                {tabs.map((tab) => (
-                  <SwiperSlide key={tab.key} style={{ width: "auto" }}>
-                    {loading ? (
-                      <div className="flex justify-center">
-                        <div className="h-8 w-20 rounded-full bg-gray-200 animate-pulse" />
-                      </div>
-                    ) : (
-                      <button
-                        className={`${styles.tab} ${
-                          activeTab === tab.key ? styles.active : styles.inactive
-                        }`}
-                        onClick={() => setActiveTab(tab.key)}
-                      >
-                        {tab.label}
-                      </button>
+          <div className="mt-3">
+            <Reminders orderData={orderData?.info} loading={loading} />
+          </div>
+
+          {/* Tabs */}
+          <div className="mt-3">
+            <Swiper
+              modules={[FreeMode]}
+              freeMode
+              slidesPerView="auto"
+              spaceBetween={8}
+              dir="rtl"
+              className={styles.tabs}
+            >
+              {tabs.map((tab) => (
+                <SwiperSlide key={tab.key} style={{ width: "auto" }}>
+                  {loading ? (
+                    <div className="flex justify-center">
+                      <div className="h-8 w-20 rounded-full bg-gray-200 animate-pulse" />
+                    </div>
+                  ) : (
+                    <button
+                      className={`${styles.tab} ${
+                        activeTab === tab.key ? styles.active : styles.inactive
+                      }`}
+                      onClick={() => setActiveTab(tab.key)}
+                    >
+                      {tab.label}
+                    </button>
+                  )}
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+
+          {/* Content */}
+          <div className="mt-3 flex flex-col gap-3">
+            {loading ? (
+              <>
+                <Skeleton variant="rect" height={140} radius={16} />
+                <Skeleton variant="rect" height={140} radius={16} />
+              </>
+            ) : (
+              <>
+                {/* Details Tab */}
+                {activeTab === "details" && (
+                  <>
+                    <HearingCard hearings={hearings} />
+
+                    {/* مواعيد الاستشارات */}
+                    {appointments.length > 0 && (
+                      <AppointmentsCard
+                        timeline={false}
+                        appointments={appointments}
+                        orderId={id}
+                        onConfirmSuccess={fetchOrder}
+                      />
                     )}
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
 
-            {/* Content */}
-            <div className="mt-3 flex flex-col gap-3">
-              {loading ? (
-                <>
-                  <Skeleton variant="rect" height={140} radius={16} />
-                  <Skeleton variant="rect" height={140} radius={16} />
-                </>
-              ) : (
-                <>
-                  {/* Details Tab */}
-                  {activeTab === "details" && (
-                    <>
-                      <HearingCard hearings={hearings} />
-
-                      {/* مواعيد الاستشارات */}
-                      {appointments.length > 0 && (
-                        <AppointmentsCard
-                          timeline={false}
-                          appointments={appointments}
+                    {/* طلبات الموافقة */}
+                    {approvals.length > 0 && (
+                      <div className="mt-3 flex flex-col gap-3">
+                        <ApprovalsTap
+                          approvals={approvals}
                           orderId={id}
-                          onConfirmSuccess={fetchOrder}
+                          onApproveSuccess={fetchOrder}
                         />
-                      )}
+                      </div>
+                    )}
 
-                      {/* طلبات الموافقة */}
-                      {approvals.length > 0 && (
-                        <div className="mt-3 flex flex-col gap-3">
-                          <ApprovalsTap
-                            approvals={approvals}
-                            orderId={id}
-                            onApproveSuccess={fetchOrder}
-                          />
-                        </div>
-                      )}
+                    {timeline.length > 0 && (
+                      <div className="mt-3 flex flex-col gap-3">
+                        <AppointmentsCard
+                          timeline={true}
+                          appointments={timeline}
+                          orderId={id}
+                          onApproveSuccess={fetchOrder}
+                        />
+                      </div>
+                    )}
 
-                      {timeline.length > 0 && (
-                        <div className="mt-3 flex flex-col gap-3">
-                          <AppointmentsCard
-                            timeline={true}
-                            appointments={timeline}
-                            orderId={id}
-                            onApproveSuccess={fetchOrder}
-                          />
-                        </div>
-                      )}
-
-                      {!timeline.length > 0 &&
-                        !approvals.length > 0 &&
-                        !hearings.length > 0 &&
-                        !appointments.length > 0 && (
-                          <>
-                            <div className={stylesEmpty.empty}>
-                              <div className={stylesEmpty.emptyContent}>
-                                <p className={stylesEmpty.emptyTitle}>{t("emptyDetailsTitle")}</p>
-                                <p className={stylesEmpty.emptySubtitle}>
-                                  {t("emptyDetailsSubtitle")}
-                                </p>
-                              </div>
+                    {!timeline.length > 0 &&
+                      !approvals.length > 0 &&
+                      !hearings.length > 0 &&
+                      !appointments.length > 0 && (
+                        <>
+                          <div className={stylesEmpty.empty}>
+                            <div className={stylesEmpty.emptyContent}>
+                              <p className={stylesEmpty.emptyTitle}>{t("emptyDetailsTitle")}</p>
+                              <p className={stylesEmpty.emptySubtitle}>
+                                {t("emptyDetailsSubtitle")}
+                              </p>
                             </div>
-                          </>
-                        )}
-                    </>
-                  )}
+                          </div>
+                        </>
+                      )}
+                  </>
+                )}
 
-                  {/* Documents Tab */}
-                  {activeTab === "docs" && (
-                    <div className="flex flex-col gap-3">
-                      <DocumentsTap
-                        documents={documents}
-                        orderId={id}
-                        onUploadSuccess={fetchOrder}
-                      />
-                    </div>
-                  )}
+                {/* Documents Tab */}
+                {activeTab === "docs" && (
+                  <div className="flex flex-col gap-3">
+                    <DocumentsTap documents={documents} orderId={id} onUploadSuccess={fetchOrder} />
+                  </div>
+                )}
 
-                  {/* Payments Tab */}
-                  {activeTab === "invoices" && (
-                    <div className="flex flex-col gap-3">
-                      <PaymentsTap payments={payments} />
-                    </div>
-                  )}
+                {/* Payments Tab */}
+                {activeTab === "invoices" && (
+                  <div className="flex flex-col gap-3">
+                    <PaymentsTap payments={payments} />
+                  </div>
+                )}
 
-                  {/* Approvals Tab */}
-                  {activeTab === "info" && (
-                    <div className="flex flex-col gap-3">
-                      <RequestedInformationSection
-                        requestedInformation={requested_information}
-                        orderId={id}
-                        onSuccess={fetchOrder}
-                      />
-                    </div>
-                  )}
-                </>
-              )}
-              {error && !loading ? (
-                <div className="text-sm text-red-500 text-start">{error}</div>
-              ) : null}
-            </div>
-          </section>
-        )}
-      </div>
+                {/* Approvals Tab */}
+                {activeTab === "info" && (
+                  <div className="flex flex-col gap-3">
+                    <RequestedInformationSection
+                      requestedInformation={requested_information}
+                      orderId={id}
+                      onSuccess={fetchOrder}
+                    />
+                  </div>
+                )}
+              </>
+            )}
+            {error && !loading ? (
+              <div className="text-sm text-red-500 text-start">{error}</div>
+            ) : null}
+          </div>
+        </section>
+      )}
     </>
   );
 };

@@ -89,7 +89,7 @@ const PaymentPage = () => {
 
   const returnUrlParam = searchParams.get("return_url");
   const orderReturnUrl =
-    navState?.orderId && `${window.location.origin}/${lng || "ar"}/orders/${navState.orderId}`;
+    navState?.orderId && `${window.location.origin}/${lng || "ar"}/task/${navState.orderId}`;
   const computedReturnUrl =
     orderReturnUrl ||
     returnUrlParam ||

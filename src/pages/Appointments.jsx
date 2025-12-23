@@ -11,10 +11,7 @@ const Appointments = () => {
         <Meta name="description" content="Lawyer Client — chat and management app." />
       </HeadProvider>
       <>
-        <div className="relative flex flex-col md:flex-row items-start justify-between w-full my-0 md:my-[158px]  gap-5">
-          <Sidebar hideOnMobile />
-          <Calendar />
-        </div>
+        <Calendar />
       </>
     </>
   );

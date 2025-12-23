@@ -120,86 +120,81 @@ const UserOrders = () => {
   }, [orders, active, query]);
 
   return (
-    <div className="relative flex flex-col md:flex-row items-start justify-between w-full my-0 md:my-[158px] gap-3 ">
-      <Sidebar hideOnMobile />
-      <section id="Orders" dir={dir} className={`pb-24 ${styles.orders} `}>
-        <PageHeader title={t("pageTitle")} />
+    <section id="Orders" dir={dir} className={`pb-24 ${styles.orders} `}>
+      <PageHeader title={t("pageTitle")} />
 
-        <div className=" mt-1">
-          <div className={styles.searchWrap}>
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder={t("searchPlaceholder")}
-            />
-            <SearchIcon size={18} />
-          </div>
+      <div className=" mt-1">
+        <div className={styles.searchWrap}>
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={t("searchPlaceholder")}
+          />
+          <SearchIcon size={18} />
         </div>
+      </div>
 
-        <div className=" mt-2">
-          <Swiper
-            modules={[FreeMode]}
-            freeMode
-            slidesPerView="auto"
-            spaceBetween={8}
-            dir={dir}
-            className={styles.tabs}
-          >
-            {tabs.map((tab) => (
-              <SwiperSlide key={tab.key} style={{ width: "auto" }}>
-                <button
-                  className={`${styles.tab} ${active === tab.key ? styles.active : styles.inactive}`}
-                  onClick={() => setActive(tab.key)}
-                  type="button"
-                >
-                  {tab.label}
-                </button>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
+      <div className=" mt-2">
+        <Swiper
+          modules={[FreeMode]}
+          freeMode
+          slidesPerView="auto"
+          spaceBetween={8}
+          dir={dir}
+          className={styles.tabs}
+        >
+          {tabs.map((tab) => (
+            <SwiperSlide key={tab.key} style={{ width: "auto" }}>
+              <button
+                className={`${styles.tab} ${active === tab.key ? styles.active : styles.inactive}`}
+                onClick={() => setActive(tab.key)}
+                type="button"
+              >
+                {tab.label}
+              </button>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
 
-        <div className=" mt-3 flex flex-col gap-[16px]">
-          {loading ? (
-            <>
-              <Skeleton variant="rect" height={78} radius={16} />
-              <Skeleton variant="rect" height={78} radius={16} />
-              <Skeleton variant="rect" height={78} radius={16} />
-            </>
-          ) : (
-            filtered.map((order) => (
-              <Link to={`${base}/orders/${order.id}`} key={order.id} className={styles.card}>
-                <div className="flex items-start justify-between">
-                  <div className="text-[#1A1A1A] font-bold text-base">
-                    {order?.name || order?.title}
-                  </div>
-                  <div className={`inline-flex items-center ${styles[order?.status]}`}>
-                    {order?.status_label}
-                  </div>
+      <div className=" mt-3 flex flex-col gap-[16px]">
+        {loading ? (
+          <>
+            <Skeleton variant="rect" height={78} radius={16} />
+            <Skeleton variant="rect" height={78} radius={16} />
+            <Skeleton variant="rect" height={78} radius={16} />
+          </>
+        ) : (
+          filtered.map((order) => (
+            <Link to={`${base}/task/${order.id}`} key={order.id} className={styles.card}>
+              <div className="flex items-start justify-between">
+                <div className="text-[#1A1A1A] font-bold text-base">
+                  {order?.name || order?.title}
                 </div>
-                <div
-                  className={`${styles.meta} mt-2 text-sm text-[#4D4D4D] flex flex-col items-start gap-4`}
-                >
-                  <span className="flex items-center gap-1">
-                    <CalendarIcon active={true} size={16} /> {t("lastUpdated")}{" "}
-                    {formatDate(order?.updated_at)}
-                  </span>
-                  <span>{t("orderNumber", { number: order?.number })}</span>
+                <div className={`inline-flex items-center ${styles[order?.status]}`}>
+                  {order?.status_label}
                 </div>
-              </Link>
-            ))
-          )}
-          {error && !loading ? (
-            <div className="text-sm text-red-500 text-start">{error}</div>
-          ) : null}
+              </div>
+              <div
+                className={`${styles.meta} mt-2 text-sm text-[#4D4D4D] flex flex-col items-start gap-4`}
+              >
+                <span className="flex items-center gap-1">
+                  <CalendarIcon active={true} size={16} /> {t("lastUpdated")}{" "}
+                  {formatDate(order?.updated_at)}
+                </span>
+                <span>{t("orderNumber", { number: order?.number })}</span>
+              </div>
+            </Link>
+          ))
+        )}
+        {error && !loading ? <div className="text-sm text-red-500 text-start">{error}</div> : null}
 
-          <a href={`${base}/service`} className={styles.fab} aria-label={t("addOrder")}>
-            <img src="/assets/icons/plus.svg" alt="plus icon" width={24} />
-          </a>
-        </div>
-      </section>
-    </div>
+        <a href={`${base}/service`} className={styles.fab} aria-label={t("addOrder")}>
+          <img src="/assets/icons/plus.svg" alt="plus icon" width={24} />
+        </a>
+      </div>
+    </section>
   );
 };
 

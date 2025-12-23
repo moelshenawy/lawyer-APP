@@ -216,7 +216,7 @@ const Sidebar = ({ hideOnMobile = false, variant = "default" }) => {
         </Link>
 
         <Link
-          to={`${base}/orders`}
+          to={`${base}/tasks`}
           className={`${styles.menuItem} ${isProfileVariant ? styles.menuItemProfile : ""}`}
         >
           <div className={`flex items-center gap-3 ${styles.menuContent}`}>

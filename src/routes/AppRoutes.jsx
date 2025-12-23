@@ -52,8 +52,8 @@ const AppRoutes = createBrowserRouter([
             element: <MainLayout />,
             children: [
               { index: true, element: <Home /> },
-              { path: "orders", element: <Orders /> },
-              { path: "/:lng/orders/:id", element: <OrderDetails /> },
+              { path: "tasks", element: <Orders /> },
+              { path: "/:lng/task/:id", element: <OrderDetails /> },
               { path: "appointments", element: <Appointments /> },
               { path: "consultation", element: <Consultation /> },
               { path: "account-settings", element: <AccountSettingsPage /> },
