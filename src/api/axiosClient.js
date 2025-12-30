@@ -10,6 +10,12 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use((config) => {
   const token = localStorage.getItem("access_token");
   if (token) config.headers.Authorization = `Bearer ${token}`;
+
+  // locale header (same style as lawyer-client)
+  const parts = (window.location.pathname || "").split("/").filter(Boolean);
+  const currentLocale = parts[0] || "ar";
+  config.headers.locale = currentLocale;
+
   return config;
 });
 

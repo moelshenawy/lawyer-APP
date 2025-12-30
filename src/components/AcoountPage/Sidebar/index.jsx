@@ -234,24 +234,6 @@ const Sidebar = ({ hideOnMobile = false, variant = "default" }) => {
         </Link>
 
         <Link
-          to={`${base}/packages`}
-          className={`${styles.menuItem} ${isProfileVariant ? styles.menuItemProfile : ""}`}
-        >
-          <div className={`flex items-center gap-3 ${styles.menuContent}`}>
-            <span className={styles.menuIcon}>
-              <img src="/assets/icons/justice-scale.svg" width={24} alt="icon" />
-            </span>
-            <span className={styles.menuLabel}>{t("packages")}</span>
-          </div>
-
-          <img
-            src="/assets/icons/arrow-left.svg"
-            alt="arrow"
-            className={`${styles.arrowIcon} ${isProfileVariant ? styles.arrowHidden : ""}`}
-          />
-        </Link>
-
-        <Link
           to={`${base}/contact`}
           className={`${styles.menuItem} ${isProfileVariant ? styles.menuItemProfile : ""}`}
         >

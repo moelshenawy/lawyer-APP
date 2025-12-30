@@ -1,15 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import i18n from "@/locales/i18n";
+import { useLocaleChange } from "@/context/LocaleChangeContext";
 
 const supported = ["en", "ar", "erdo"];
 
 export default function LanguageWrapper() {
   const { lng } = useParams();
   const navigate = useNavigate();
+  const { triggerRefetchAll } = useLocaleChange();
+  const previousLngRef = useRef(lng);
 
   useEffect(() => {
-    const next = supported.includes(lng || "") ? lng : i18n.resolvedLanguage || i18n.language || "ar";
+    const next = supported.includes(lng || "")
+      ? lng
+      : i18n.resolvedLanguage || i18n.language || "ar";
     if (lng && !supported.includes(lng)) {
       // If an unsupported lang was in the URL, normalize to fallback
       navigate(`/ar`, { replace: true });
@@ -23,8 +28,13 @@ export default function LanguageWrapper() {
     try {
       localStorage.setItem("lang", next);
     } catch {}
-  }, [lng, navigate]);
+
+    // Trigger API refetch if locale actually changed
+    if (previousLngRef.current && previousLngRef.current !== lng) {
+      triggerRefetchAll();
+    }
+    previousLngRef.current = lng;
+  }, [lng, navigate, triggerRefetchAll]);
 
   return <Outlet />;
 }
-

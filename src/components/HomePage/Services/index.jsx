@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper/modules";
 import "swiper/css";
@@ -10,6 +10,7 @@ import axiosClient from "@/api/axiosClient";
 import Skeleton from "@/components/Skeleton";
 import StatusPopup from "@/components/common/StatusPopup";
 import { useTranslation } from "react-i18next";
+import { useApiQuery } from "@/hooks/useApiQuery";
 
 const fallbackIcons = [
   "/assets/icons/services/1.svg",
@@ -22,30 +23,27 @@ const Services = () => {
   const navigate = useNavigate();
   const base = `/${lng || "ar"}`;
   const { t } = useTranslation("home");
-  const [services, setServices] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
   const [popupOpen, setPopupOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const dir = (lng || "ar") === "ar" ? "rtl" : "ltr";
 
-  useEffect(() => {
-    const fetchServices = async () => {
-      setLoading(true);
-      try {
-        const res = await axiosClient.get("/client/info/services");
-        const list = res?.data?.data?.services || res?.data?.services || [];
-        setServices(Array.isArray(list) ? list : []);
-      } catch {
-        setServices([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchServices();
-  }, []);
+  const { data: servicesData, loading } = useApiQuery(
+    () => axiosClient.get("/client/info/services"),
+    {
+      onSuccess: (response) => {
+        const list = response?.data?.data?.services || response?.data?.services || [];
+        return Array.isArray(list) ? list : [];
+      },
+      onError: () => {
+        return [];
+      },
+    },
+  );
 
-  const items = useMemo(() => (services && services.length ? services : []), [services]);
+  const items = useMemo(() => {
+    return servicesData && servicesData.length ? servicesData : [];
+  }, [servicesData]);
 
   const handleCardClick = (service) => {
     setSelectedService(service);

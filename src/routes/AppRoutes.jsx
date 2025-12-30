@@ -63,7 +63,7 @@ const AppRoutes = createBrowserRouter([
               { path: "packages", element: <Packages /> },
               // { path: "change-password", element: <ChangePassword /> },
               { path: "contact", element: <Contact /> },
-              { path: "service", element: <Service /> },
+              // { path: "service", element: <Service /> },
               { path: "payment", element: <Payment /> },
               { path: "success", element: <Success /> },
               { path: "notification", element: <NotificationPage /> },
