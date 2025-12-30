@@ -109,6 +109,7 @@
   padding: 14px;
 }
 .docIcon {
+  /* Document icon styles can be added here */
 }
 .docCardMuted {
   background: #f4f5f6;
@@ -262,4 +263,28 @@
 }
 .invoiceDetailRow + .invoiceDetailRow {
   border-top: 1px solid #e5e5e5;
+}
+
+/* Comments Section */
+.commentsSection {
+  background: #ffffff;
+  border: 1px solid #ececec;
+  border-radius: 16px;
+  padding: 16px;
+
+  .space-y-4 > * + * {
+    margin-top: 1rem;
+  }
+
+  .space-y-4 {
+    > div {
+      &:not(:last-child) {
+        hr {
+          border: none;
+          border-top: 1px solid #e5e5e5;
+          margin: 1rem 0;
+        }
+      }
+    }
+  }
 }

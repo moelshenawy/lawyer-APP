@@ -19,6 +19,7 @@ import RequestedInformationSection from "./RequestedInformationSection";
 import stylesEmpty from "./RequestedInformationSection.module.scss";
 import { useTranslation } from "react-i18next";
 import homeStyles from "@/pages/Home.module.scss";
+import User from "@/assets/icons/User";
 
 const API_BASE = (
   import.meta.env.VITE_API_BASE_URL || "https://fawaz-law-firm.apphub.my.id/api"
@@ -62,6 +63,24 @@ const OrderDetails = () => {
   const [loading, setLoading] = useState(true);
   const [errStatus, setErrStatus] = useState(200);
   const [error, setError] = useState("");
+  const [comments, setComments] = useState([
+    { id: 1, name: "احمد محمد", text: "تمت", initials: "AM" },
+    { id: 2, name: "احمد محمد", text: "تمت", initials: "AM" },
+  ]);
+  const [newComment, setNewComment] = useState("");
+
+  const handleAddComment = () => {
+    if (newComment.trim()) {
+      const newCommentObj = {
+        id: comments.length + 1,
+        name: "احمد محمد",
+        text: newComment.trim(),
+        initials: "AM",
+      };
+      setComments([...comments, newCommentObj]);
+      setNewComment("");
+    }
+  };
 
   const TAB_ITEMS = useMemo(
     () => [
@@ -217,37 +236,6 @@ const OrderDetails = () => {
             <Reminders orderData={orderData?.info} loading={loading} />
           </div>
 
-          {/* Tabs */}
-          <div className="mt-3">
-            <Swiper
-              modules={[FreeMode]}
-              freeMode
-              slidesPerView="auto"
-              spaceBetween={8}
-              dir="rtl"
-              className={styles.tabs}
-            >
-              {tabs.map((tab) => (
-                <SwiperSlide key={tab.key} style={{ width: "auto" }}>
-                  {loading ? (
-                    <div className="flex justify-center">
-                      <div className="h-8 w-20 rounded-full bg-gray-200 animate-pulse" />
-                    </div>
-                  ) : (
-                    <button
-                      className={`${styles.tab} ${
-                        activeTab === tab.key ? styles.active : styles.inactive
-                      }`}
-                      onClick={() => setActiveTab(tab.key)}
-                    >
-                      {tab.label}
-                    </button>
-                  )}
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-
           {/* Content */}
           <div className="mt-3 flex flex-col gap-3">
             {loading ? (
@@ -313,11 +301,69 @@ const OrderDetails = () => {
                 )}
 
                 {/* Documents Tab */}
-                {activeTab === "docs" && (
-                  <div className="flex flex-col gap-3">
-                    <DocumentsTap documents={documents} orderId={id} onUploadSuccess={fetchOrder} />
+                <div className="flex flex-col gap-3">
+                  <DocumentsTap documents={documents} orderId={id} onUploadSuccess={fetchOrder} />
+                </div>
+
+                {/* Comments Section */}
+                <div className="flex flex-col gap-3 mt-3">
+                  <div className={styles.commentsSection}>
+                    <h3 className="text-lg font-bold mb-4">تعليقات</h3>
+
+                    {/* Comments List */}
+                    <div className="space-y-4">
+                      {comments.map((comment) => (
+                        <div key={comment.id}>
+                          <div className="flex items-start gap-3">
+                            <div className="w-10 h-10  rounded-full flex items-center justify-center">
+                              <User size={20} />
+                            </div>
+                            <div className="flex-1">
+                              <p className="font-semibold text-gray-900">{comment.name}</p>
+                              <p className="text-gray-700 mt-1">{comment.text}</p>
+                            </div>
+                          </div>
+                          {comment.id < comments.length && <hr className="my-4 border-gray-200" />}
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Add Comment Input */}
+                    <div className="flex items-center gap-3 mt-6">
+                      <div className="w-10 h-10  rounded-full flex items-center justify-center">
+                        <User size={20} />
+                      </div>
+                      <div className="flex-1 flex items-center gap-2 bg-white border border-[#E6E6E6] rounded-full px-4 py-2">
+                        <input
+                          type="text"
+                          value={newComment}
+                          onChange={(e) => setNewComment(e.target.value)}
+                          onKeyPress={(e) => e.key === "Enter" && handleAddComment()}
+                          placeholder="اضف تعليق"
+                          className="flex-1 bg-transparent outline-none text-gray-700 placeholder-gray-500"
+                        />
+                      </div>
+
+                      <button
+                        onClick={handleAddComment}
+                        className="w-8 h-8 bg-[##EEF8FF] border border-[#0074CC] rounded-full flex items-center justify-center text-[#003E6F]  "
+                      >
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="w-4 h-4"
+                        >
+                          <line x1="22" y1="2" x2="11" y2="13"></line>
+                          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                      </button>
+                    </div>
                   </div>
-                )}
+                </div>
 
                 {/* Payments Tab */}
                 {activeTab === "invoices" && (

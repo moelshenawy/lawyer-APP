@@ -32,11 +32,10 @@ const DocumentsTap = ({ documents, orderId, onUploadSuccess }) => {
 
   const handleFileChange = async (e) => {
     const file = e.target.files?.[0];
-    e.target.value = ""; // علشان يقدر يختار نفس الملف تاني لو حب
-
+    e.target.value = "";
     if (!file || !orderId) return;
 
-    const url = `${API_BASE}/client/orders/${orderId}/documents`;
+    const url = `${API_BASE}/client/task/${orderId}`;
     const token = getStoredUserToken();
     const formData = new FormData();
     formData.append("file", file);
@@ -76,52 +75,8 @@ const DocumentsTap = ({ documents, orderId, onUploadSuccess }) => {
     }
   };
 
-  // if (!documents.length) {
-  //   return (
-  //     <div className={stylesEmpty.empty}>
-  //       <div className={stylesEmpty.emptyContent}>
-  //         <p className={stylesEmpty.emptyTitle}>لا توجد فواتير حالياً</p>
-  //         <p className={stylesEmpty.emptySubtitle}>جميع الفواتير المدفوعة و المستحقة </p>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
   return (
     <>
-      {documents.length ? (
-        documents.map((doc) => (
-          <div key={doc.id} className={styles.docRow}>
-            <div>
-              <div className="text-[#5F5F5F] font-bold min-w-0 text-[#5F5F5F] font-bold truncate max-w-[220px]">
-                {doc.title}
-              </div>
-              <div className="text-sm text-[#5F5F5F] opacity-80">
-                {t("documents.dateLabel")} {doc.uploaded_at}
-              </div>
-            </div>
-            <div className="btns flex gap-3">
-              <a
-                className="flex items-center gap-1 text-[#5F5F5F]"
-                href={doc.file_url}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <IoEyeOutline size={18} />
-                {t("documents.view")}
-              </a>
-            </div>
-          </div>
-        ))
-      ) : (
-        <div className={stylesEmpty.empty}>
-          <div className={stylesEmpty.emptyContent}>
-            <p className={stylesEmpty.emptyTitle}>{t("documents.emptyTitle")}</p>
-            <p className={stylesEmpty.emptySubtitle}>{t("documents.emptySubtitle")}</p>
-          </div>
-        </div>
-      )}
-
       <div className={styles.docRow2}>
         <div className="flex flex-col w-[100%]">
           <div className="text-[#5F5F5F] font-bold">{t("documents.uploadHint")}</div>
