@@ -1,12 +1,13 @@
 import axiosClient from "./axiosClient";
 
 export const getUserProfile = () => axiosClient.get("/user/profile");
-export const getAccount = () => axiosClient.get("/client/account");
-export const updateUserProfile = (data) => axiosClient.post("/client/account/update-info", data);
-export const getSubscriptionPlans = () => axiosClient.get("/client/info/subscription-plans");
-export const unsubscribeAccount = () => axiosClient.post("/client/account/unsubscribe");
-export const subscribeAccount = (subscriptionPlanId) =>
-  axiosClient.post("/client/account/subscribe", {
-    subscription_plan_id: subscriptionPlanId,
-  });
-export const deleteAccount = () => axiosClient.delete("/client/account");
+export const getAccount = () => axiosClient.get("/user/account");
+export const updateUserProfile = (data) => axiosClient.post("/user/account/update-info", data);
+
+export const getTasks = () => axiosClient.get("/user/tasks");
+
+export const clockIn = () => axiosClient.post("/user/attendance/clock-in");
+export const clockOut = () => axiosClient.post("/user/attendance/clock-out");
+export const getAttendanceToday = () => axiosClient.get("/user/attendance/today");
+
+export const deleteAccount = () => axiosClient.delete("/user/account");

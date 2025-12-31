@@ -27,7 +27,45 @@
   font-weight: 700;
   line-height: 1.5;
 }
+.tasks{
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
 
+.attendanceDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.detailsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 4px;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    strong {
+      opacity: 0.8;
+      font-weight: 500;
+    }
+  }
+}
 .bannerActions {
   display: flex;
   align-items: center;
@@ -54,6 +92,51 @@
   svg {
     width: 22px;
     height: 22px;
+  }
+}
+
+.fingerprintBtn {
+  background: #ffffff;
+  padding: 8px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    background: #f0f0f0;
+  }
+
+  img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
+}
+
+.logoutBtn {
+  background: #ffffff;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: #dc2626;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    background: #f0f0f0;
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
   }
 }
 
@@ -279,10 +362,15 @@
   gap: 6px;
   padding: 4px 10px;
   border-radius: 999px;
-  background: #fff4d1;
+  background: #fff4d1; // Default (Normal)
   color: #d89b00;
   font-size: 12px;
   font-weight: 600;
+
+  &.urgent {
+    background: #fee2e2;
+    color: #ef4444;
+  }
 
   svg {
     width: 14px;
@@ -293,6 +381,68 @@
 .taskAge {
   color: #9aa0a6;
   font-size: 13px;
+}
+
+.editStatusWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.editStatusBtn {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #2f8f46;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.statusDropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 50;
+  margin-top: 4px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  padding: 4px;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.statusOption {
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: right;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #374151;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:hover {
+    background: #f3f4f6;
+    color: #111827;
+  }
 }
 
 .taskTitle {
@@ -344,3 +494,92 @@
     height: 16px;
   }
 }
+
+
+// Attendance
+
+.attendanceHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.attendanceChip {
+  display: flex;
+  align-items: center;
+}
+
+.chipPending,
+.chipIn,
+.chipDone {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.chipPending { background: rgba(255, 193, 7, 0.18); }
+.chipIn { background: rgba(0, 200, 83, 0.16); }
+.chipDone { background: rgba(33, 150, 243, 0.16); }
+
+.processingHint {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.bannerSubText {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.actionLabel {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.summaryItem,
+.summaryItemWide {
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.summaryItemWide {
+  grid-column: 1 / -1;
+}
+
+.summaryLabel {
+  display: block;
+  font-size: 12px;
+  opacity: 0.8;
+  margin-bottom: 4px;
+}
+
+.summaryValue {
+  font-size: 14px;
+  font-weight: 700;
+
+  small {
+    font-weight: 500;
+    opacity: 0.75;
+  }
+}
+

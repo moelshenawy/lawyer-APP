@@ -5,24 +5,18 @@ import {
   IoChevronBackOutline,
   IoChevronForwardOutline,
   IoChevronDownOutline,
-  IoTimeOutline,
 } from "react-icons/io5";
-import CalendarIcon from "@/assets/icons/Calendar";
-import Location from "@/assets/icons/Location";
-import Comment from "@/assets/icons/Comment";
 import Skeleton from "@/components/Skeleton";
-import AppointmentsCard from "@/components/OrdersPage/OrderDetails/AppointmentsCard";
-import HearingCard from "@/components/OrdersPage/OrderDetails/HearingCard";
-import ConsultationsCard from "./ConsultationsCard";
 import { AuthContext } from "@/context/AuthContext";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
+import CalendarCard from "./CalendarCard";
 
 const API_BASE = (
   import.meta.env.VITE_API_BASE_URL || "https://fawaz-law-firm.apphub.my.id/api"
 ).replace(/\/$/, "");
 
-const CALENDAR_URL = `${API_BASE}/client/calendar`;
+const CALENDAR_URL = `${API_BASE}/user/calendar`;
 
 const getStoredUserToken = () => {
   if (typeof window === "undefined") return null;
@@ -283,57 +277,6 @@ const Calendar = () => {
     }
   };
 
-  const splitDateTime = (item) => {
-    // ✅ نعتمد على starts_at_iso أولاً
-    const raw = item.starts_at_iso || item.starts_at;
-    if (!raw) return { dateLabel: "—", timeLabel: "" };
-
-    const d = new Date(raw);
-    if (!Number.isFinite(d.getTime())) {
-      return { dateLabel: item.starts_at || "—", timeLabel: "" };
-    }
-
-    let dateLabel;
-    let timeLabel;
-    try {
-      dateLabel = new Intl.DateTimeFormat(locale, {
-        weekday: "long",
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
-      }).format(d);
-      timeLabel = new Intl.DateTimeFormat(locale, {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      }).format(d);
-    } catch {
-      const yyyy = d.getFullYear();
-      const mm = String(d.getMonth() + 1).padStart(2, "0");
-      const dd = String(d.getDate()).padStart(2, "0");
-      const hh = String(d.getHours()).padStart(2, "0");
-      const mi = String(d.getMinutes()).padStart(2, "0");
-      dateLabel = `${dd}/${mm}/${yyyy}`;
-      timeLabel = `${hh}:${mi}`;
-    }
-
-    return { dateLabel, timeLabel };
-  };
-
-  const typeLabel = (source) => {
-    switch (source) {
-      case "hearing":
-        return t("eventTypeCourtSession");
-      case "appointment":
-        return t("eventTypeAppointment");
-      case "consultation":
-        return t("eventTypeConsultation");
-      case "timeline":
-        return t("eventTypeCaseUpdate");
-      default:
-        return t("eventTypeAppointment");
-    }
-  };
 
   const sortedAllEvents = useMemo(() => {
     return [...events].sort((a, b) => {
@@ -344,182 +287,14 @@ const Calendar = () => {
     });
   }, [events]);
 
-  const appointments = useMemo(
-    () => sortedAllEvents.filter((e) => e.source === "appointment"),
-    [sortedAllEvents],
-  );
-
-  const consultations = useMemo(
-    () => sortedAllEvents.filter((e) => e.source === "consultation"),
-    [sortedAllEvents],
-  );
-
-  const hearings = useMemo(
-    () => sortedAllEvents.filter((e) => e.source === "hearing"),
-    [sortedAllEvents],
-  );
-  const timeline = useMemo(
-    () => sortedAllEvents.filter((e) => e.source === "timeline"),
-    [sortedAllEvents],
-  );
-  const otherEvents = useMemo(
-    () =>
-      sortedAllEvents.filter(
-        (e) => !["appointment", "consultation", "hearing", "timeline"].includes(e.source),
-      ),
-    [sortedAllEvents],
-  );
-
   const selectedEvents = useMemo(() => {
     if (!selectedKey) return [];
     return sortedAllEvents.filter((item) => getEventDateKey(item) === selectedKey);
   }, [sortedAllEvents, selectedKey]);
 
-  const selectedAppointments = useMemo(
-    () => selectedEvents.filter((e) => e.source === "appointment"),
-    [selectedEvents],
-  );
-
-  const selectedConsultations = useMemo(
-    () => selectedEvents.filter((e) => e.source === "consultation"),
-    [selectedEvents],
-  );
-
-  const selectedHearings = useMemo(
-    () => selectedEvents.filter((e) => e.source === "hearing"),
-    [selectedEvents],
-  );
-  const selectedTimeline = useMemo(
-    () => selectedEvents.filter((e) => e.source === "timeline"),
-    [selectedEvents],
-  );
-  const selectedOtherEvents = useMemo(
-    () =>
-      selectedEvents.filter(
-        (e) => !["appointment", "consultation", "hearing", "timeline"].includes(e.source),
-      ),
-    [selectedEvents],
-  );
-
-  //  mapping → AppointmentsCard
-  const mapCalendarAppointments = (items) =>
-    items.map((item) => ({
-      id: item.id,
-      status: item.status,
-      status_label: item.status_label,
-      client_appointment_at: item.starts_at,
-      message: item.description,
-      location: item.location,
-      source: item.source,
-      actions: item.actions,
-      due_at: item.due_at,
-    }));
-
-  //  mapping → HearingCard
-  const mapCalendarHearings = (items) =>
-    items.map((item) => {
-      const d = getEventDate(item);
-      let sessionDate = item.starts_at || "";
-      let start_time = "";
-
-      if (d && Number.isFinite(d.getTime())) {
-        sessionDate = new Intl.DateTimeFormat("en-GB", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-        }).format(d);
-
-        start_time = new Intl.DateTimeFormat("ar-EG", {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: true,
-        }).format(d);
-      }
-
-      return {
-        id: item.id,
-        judge_name: item.title || t("judgeDefaultName"),
-        session_date: sessionDate || item.starts_at || "",
-        start_time,
-        status_label: item.status_label,
-        location: item.location,
-        outcome: item.description,
-      };
-    });
-
-  //  mapping → AppointmentsCard (timeline mode)
-  const mapCalendarTimeline = (items) =>
-    items.map((item) => {
-      const d = getEventDate(item);
-      let occurred_at = item.starts_at || "";
-      if (d && Number.isFinite(d.getTime())) {
-        occurred_at = new Intl.DateTimeFormat("en-GB", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-        }).format(d);
-      }
-      return {
-        id: item.id,
-        title: item.title,
-        occurred_at,
-        details: item.description,
-        location: item.location || "",
-      };
-    });
-
-  const renderEventCard = (item, keyPrefix = "card") => {
-    const { dateLabel, timeLabel } = splitDateTime(item);
-    const statusLabel = item.status_label || "";
-    const label = typeLabel(item.source);
-    const location = item.location || null;
-    const description = item.description || null;
-
-    return (
-      <div key={`${keyPrefix}-${item.source}-${item.id}`} className={styles.listCard}>
-        <div className={styles.listCardTop}>
-          <div className="flex flex-col gap-1">
-            <div className="text-primary font-bold text-base">{item.title || label}</div>
-            <div className="text-xs text-[#6B7280]">{label}</div>
-          </div>
-
-          <div className="flex flex-col items-end gap-1 text-primary text-sm font-medium">
-            <span className="flex items-center gap-1 text-[#5F5F5F]">
-              <CalendarIcon size={16} color={"#003f6f"} /> {dateLabel}
-            </span>
-
-            {timeLabel && (
-              <span className="flex items-center gap-1 text-[#5F5F5F]">
-                <IoTimeOutline size={16} /> {timeLabel}
-              </span>
-            )}
-            {statusLabel && (
-              <span className={`${styles.chip} ${styles[item.status] || ""}`}>{statusLabel}</span>
-            )}
-          </div>
-        </div>
-
-        <div className="px-4 py-3">
-          {description && <p className="mb-2 font-medium text-sm text-primary">{description}</p>}
-
-          {location && (
-            <div className="flex items-center gap-1 text-primary text-sm mt-1">
-              <Location size={16} />
-              {location}
-            </div>
-          )}
-        </div>
-
-        {item.source === "hearing" && (
-          <div className={styles.cardFooterBar}>
-            <div className="flex items-center gap-3">
-              <Comment size={20} />
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  };
+  const cardsToShow = useMemo(() => {
+  return selected ? selectedEvents : sortedAllEvents;
+}, [selected, selectedEvents, sortedAllEvents]);
 
   const selectedHeaderLabel = selected ? formatFullDate(selected) : t("allAppointmentsInRange");
 
@@ -682,144 +457,57 @@ const Calendar = () => {
           <div className="mt-4">
             <h3 className="text-[#000E1A] text-lg font-bold mb-2">{selectedHeaderLabel}</h3>
 
-            {loadingEvents ? (
-              <>
-                <Skeleton variant="rect" height={120} radius={16} />
-                <br />
-                <Skeleton variant="rect" height={120} radius={16} />
-                <br />
-                <Skeleton variant="rect" height={120} radius={16} />
-                <br />
-                <Skeleton variant="rect" height={120} radius={16} />
-              </>
-            ) : error ? (
-              <div className="text-sm text-red-500">{error}</div>
-            ) : !selected ? (
-              // ✅ ديفولت: عرض كل الكروت لسنة قبل وسنة بعد
-              sortedAllEvents.length === 0 ? (
-                <div className="text-sm text-[#6B7280]">{t("noEventsInRange")}</div>
-              ) : (
-                <div className="flex flex-col gap-4">
-                  {appointments.length > 0 && (
-                    <AppointmentsCard
-                      appointments={mapCalendarAppointments(appointments)}
-                      orderId={null}
-                      onConfirmSuccess={refreshDefaultRange}
-                      timeline={false}
-                      context="calendar"
-                    />
-                  )}
+   {loadingEvents ? (
+  <>
+    <Skeleton variant="rect" height={120} radius={16} />
+    <br />
+    <Skeleton variant="rect" height={120} radius={16} />
+    <br />
+    <Skeleton variant="rect" height={120} radius={16} />
+    <br />
+    <Skeleton variant="rect" height={120} radius={16} />
+  </>
+) : error ? (
+  <div className="text-sm text-red-500">{error}</div>
+) : selected && cardsToShow.length === 0 ? (
+  <div className="text-sm text-[#6B7280]">{t("noAppointmentsThisDay")}</div>
+) : !selected && cardsToShow.length === 0 ? (
+  <div className="text-sm text-[#6B7280]">{t("noEventsInRange")}</div>
+) : (
+  <div className="flex flex-col gap-4">
+    <CalendarCard
+      config={accountConfig}
+      Cards={cardsToShow}
+      onRescheduleSuccess={refreshDefaultRange}
+    />
+  </div>
+)}
 
-                  {consultations.length > 0 && (
-                    <ConsultationsCard
-                      config={accountConfig}
-                      consultations={consultations}
-                      onRescheduleSuccess={refreshDefaultRange}
-                    />
-                  )}
-
-                  {hearings.length > 0 && <HearingCard hearings={mapCalendarHearings(hearings)} />}
-
-                  {timeline.length > 0 && (
-                    <AppointmentsCard
-                      appointments={mapCalendarTimeline(timeline)}
-                      orderId={null}
-                      timeline={true}
-                      context="calendar"
-                    />
-                  )}
-
-                  {otherEvents.map((item) => renderEventCard(item, "default-other"))}
-                </div>
-              )
-            ) : selectedEvents.length === 0 ? (
-              <div className="text-sm text-[#6B7280]">{t("noAppointmentsThisDay")}</div>
-            ) : (
-              <div className="flex flex-col gap-4">
-                {selectedAppointments.length > 0 && (
-                  <AppointmentsCard
-                    appointments={mapCalendarAppointments(selectedAppointments)}
-                    orderId={null}
-                    onConfirmSuccess={refreshDefaultRange}
-                    timeline={false}
-                    context="calendar"
-                  />
-                )}
-
-                {selectedHearings.length > 0 && (
-                  <HearingCard hearings={mapCalendarHearings(selectedHearings)} />
-                )}
-                {selectedConsultations.length > 0 && (
-                  <ConsultationsCard
-                    config={accountConfig}
-                    consultations={selectedConsultations}
-                    onRescheduleSuccess={refreshDefaultRange}
-                  />
-                )}
-
-                {selectedTimeline.length > 0 && (
-                  <AppointmentsCard
-                    appointments={mapCalendarTimeline(selectedTimeline)}
-                    orderId={null}
-                    timeline={true}
-                    context="calendar"
-                  />
-                )}
-
-                {selectedOtherEvents.map((item) => renderEventCard(item, "day-other"))}
-              </div>
-            )}
           </div>
         </>
       )}
 
-      {activeTab === "list" && (
-        <div className="mt-3 flex flex-col gap-4">
-          {loadingEvents ? (
-            <>
-              <Skeleton variant="rect" height={120} radius={16} />
-              <Skeleton variant="rect" height={120} radius={16} />
-            </>
-          ) : error ? (
-            <div className="text-sm text-red-500">{error}</div>
-          ) : sortedAllEvents.length === 0 ? (
-            <div className="text-sm text-[#6B7280]">{t("noEventsInRange")}</div>
-          ) : (
-            <>
-              {appointments.length > 0 && (
-                <AppointmentsCard
-                  appointments={mapCalendarAppointments(appointments)}
-                  orderId={null}
-                  onConfirmSuccess={refreshDefaultRange}
-                  timeline={false}
-                  context="calendar"
-                />
-              )}
+ {activeTab === "list" && (
+  <div className="mt-3 flex flex-col gap-4">
+    {loadingEvents ? (
+      <>
+        <Skeleton variant="rect" height={120} radius={16} />
+        <Skeleton variant="rect" height={120} radius={16} />
+      </>
+    ) : error ? (
+      <div className="text-sm text-red-500">{error}</div>
+    ) : sortedAllEvents.length === 0 ? (
+      <div className="text-sm text-[#6B7280]">{t("noEventsInRange")}</div>
+    ) : (
+      <CalendarCard
+        config={accountConfig}
+        Cards={sortedAllEvents}
+        onRescheduleSuccess={refreshDefaultRange}
+      />
+    )}
+  </div>
+)}
 
-              {consultations.length > 0 && (
-                <ConsultationsCard
-                  config={accountConfig}
-                  consultations={consultations}
-                  onRescheduleSuccess={refreshDefaultRange}
-                />
-              )}
-
-              {hearings.length > 0 && <HearingCard hearings={mapCalendarHearings(hearings)} />}
-
-              {timeline.length > 0 && (
-                <AppointmentsCard
-                  appointments={mapCalendarTimeline(timeline)}
-                  orderId={null}
-                  timeline={true}
-                  context="calendar"
-                />
-              )}
-
-              {otherEvents.map((item) => renderEventCard(item, "list-other"))}
-            </>
-          )}
-        </div>
-      )}
     </section>
   );
 };

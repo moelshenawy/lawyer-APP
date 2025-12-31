@@ -16,10 +16,12 @@ const StatusPopup = ({
   status = "pending",
   title,
   description,
+  description2,
   bullets = [],
   children,
   primaryAction,
   secondaryAction,
+  contentOnly = false,
   onClose,
   disableClose = false,
 }) => {
@@ -31,19 +33,22 @@ const StatusPopup = ({
   return (
     <div className={styles.overlay} onClick={disableClose ? undefined : onClose}>
       <div
-        className={`${styles.popup} ${styles[status] || ""}`}
+        className={`${styles.popup} ${contentOnly ? styles.popupContentOnly : ""}`}
         dir={i18n.dir()}
         role="dialog"
         aria-modal="true"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className={styles.header}>
-          <span className={`${styles.statusIcon} ${variant.tone}`}>{variant.icon}</span>
-        </div>
+        {!contentOnly && (
+          <div className={styles.header}>
+            <span className={`${styles.statusIcon} ${variant.tone}`}>{variant.icon}</span>
+          </div>
+        )}
 
         <div className={styles.textBlock}>
           <h3 className={styles.title}>{title}</h3>
           {description && <p className={styles.description}>{description}</p>}
+          {description2 && <p className={styles.description}>{description2}</p>}
           {bullets.length > 0 && (
             <ul className={styles.bulletList}>
               {bullets.map((item, idx) => (
@@ -82,3 +87,4 @@ const StatusPopup = ({
 };
 
 export default StatusPopup;
+ 

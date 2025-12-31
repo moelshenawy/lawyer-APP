@@ -32,5 +32,7 @@
   "subscribeConfirmTitle": "Do you want to subscribe to {{serviceTitle}}?",
   "loading": "Loading...",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "seoTitle": "Home | Lawyer",
+  "seoDescription": "Lawyer client home page."
 }

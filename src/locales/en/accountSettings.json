@@ -79,5 +79,7 @@
   "cancel": "Cancel",
   "deleteConfirmEmailLabel": "Type your email to confirm",
   "checkingAccountEmail": "Checking your account email...",
-  "biometricRequiredHint": "You will be asked to sign in with biometrics before deleting inside the app."
+  "biometricRequiredHint": "You will be asked to sign in with biometrics before deleting inside the app.",
+  "seoTitle": "Account Settings | Lawyer",
+  "seoDescription": "Your account settings."
 }

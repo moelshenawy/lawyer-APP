@@ -16,5 +16,7 @@
   "createAccount": "Create account",
   "or": "or",
   "fingerprintLogin": "Login with fingerprint",
-  "fingerprintLoginLoading": "Logging in with fingerprint..."
+  "fingerprintLoginLoading": "Logging in with fingerprint...",
+  "seoTitle": "Login | Lawyer",
+  "seoDescription": "Lawyer firm login page."
 }

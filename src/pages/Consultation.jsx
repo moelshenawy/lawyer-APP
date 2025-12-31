@@ -47,10 +47,10 @@ const Consultation = () => {
   return (
     <>
       <HeadProvider>
-        <Title>مكتب فواز للمحاماة | الاستشارات </Title>
-        <Meta name="description" content="Consultation booking form" />
+        <Title>{t("seoTitle", "الاستشارات | المحامي")}</Title>
+        <Meta name="description" content={t("seoDescription", "Consultation booking form")} />
       </HeadProvider>
-      <div className=" my-0 md:my-[158px]">
+      <div className="  ">
         <MainContent />
       </div>
     </>

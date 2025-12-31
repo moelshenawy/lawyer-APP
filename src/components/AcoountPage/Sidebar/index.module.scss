@@ -100,6 +100,13 @@
   display: grid;
   place-items: center;
   padding: 0;
+  display: flex;
+
+  svg{
+    margin: auto;
+    width: 18px;
+    height: 18px;
+  }
 }
 
 .profileName {

@@ -4,19 +4,17 @@ import MainLayout from "@/layouts/MainLayout";
 import Home from "@/pages/Home";
 import ForgotPassword from "@/pages/auth/ForgotPassword";
 import Login from "@/pages/auth/Login";
-import Register from "@/pages/auth/Register";
-import Orders from "@/pages/Orders";
-import OrderDetails from "@/pages/OrderDetails";
+import Tasks from "@/pages/Tasks";
+import Cases from "@/pages/Cases";
+import TaskDetails from "@/pages/TaskDetails";
+import CaseDetails from "@/pages/CaseDetails";
 import CaseAnalysis from "@/pages/CaseAnalysis";
 import Ai from "@/pages/Ai";
 import Chat from "@/pages/Chat";
 import Appointments from "@/pages/Appointments";
 import Consultation from "@/pages/Consultation";
 import LanguageWrapper from "@/routes/LanguageWrapper";
-import Packages from "@/pages/Packages";
 import Contact from "@/pages/Contact";
-import Verify from "@/pages/auth/Verify";
-import Service from "@/pages/Service";
 import AccountSettings from "@/pages/AccountSettings";
 import ProtectedRoute from "@/routes/ProtectedRoute";
 import Payment from "@/pages/Payment";
@@ -38,8 +36,6 @@ const AppRoutes = createBrowserRouter([
         children: [
           { path: "login", element: <Login /> },
           { path: "forgot-password", element: <ForgotPassword /> },
-          { path: "register", element: <Register /> },
-          { path: "verify", element: <Verify /> },
           { path: "hypered-test", element: <HyperedTest /> },
           { path: "*", element: <NotFound /> },
         ],
@@ -51,8 +47,10 @@ const AppRoutes = createBrowserRouter([
             element: <MainLayout />,
             children: [
               { index: true, element: <Home /> },
-              { path: "tasks", element: <Orders /> },
-              { path: "/:lng/task/:id", element: <OrderDetails /> },
+              { path: "tasks", element: <Tasks /> },
+              { path: "cases", element: <Cases /> },
+              { path: "task/:id", element: <TaskDetails /> },
+              { path: "case/:id", element: <CaseDetails /> },
               { path: "analysis/:id", element: <CaseAnalysis /> },
               { path: "appointments", element: <Appointments /> },
               { path: "consultation", element: <Consultation /> },
@@ -60,7 +58,6 @@ const AppRoutes = createBrowserRouter([
               { path: "account", element: <AccountSettings /> },
               { path: "ai", element: <Ai /> },
               { path: "chat", element: <Chat /> },
-              { path: "packages", element: <Packages /> },
               // { path: "change-password", element: <ChangePassword /> },
               { path: "contact", element: <Contact /> },
               // { path: "service", element: <Service /> },

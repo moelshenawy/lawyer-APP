@@ -3,7 +3,7 @@
     "details": "Details",
     "docs": "Documents",
     "invoices": "Invoices",
-    "info": "Requested information"
+    "info": "Information"
   },
   "orderIdNotFound": "Order ID was not found.",
   "fetchDetailsFailed": "Failed to fetch order details",
@@ -13,6 +13,8 @@
   "errorDescription": "There seems to be a connection problem or the order link is currently unavailable.",
   "errorDetailsPrefix": "Details:",
   "retry": "Retry",
+  "close": "Close",
+
   "backToAccount": "Back to account",
   "approvals": {
     "selectDecision": "Please choose a decision.",
@@ -66,9 +68,21 @@
     "uploading": "Uploading..."
   },
   "requestedInfo": {
-    "emptyTitle": "No requested information from you right now",
-    "emptySubtitle": "When we need important information from you, it will appear here",
+    "emptyTitle": "No information available right now",
+    "emptySubtitle": "Information will appear here when available",
     "send": "Send",
     "sending": "Sending..."
-  }
+  },
+  "updates": {
+    "title": "Updates",
+    "viewAttachment": "View Attachment",
+    "addUpdatePlaceholder": "Add an update",
+    "failedToAddUpdate": "Failed to add update"
+  },
+  "orderSeoTitle": "Order Details | Lawyer",
+  "orderSeoDescription": "Your order details.",
+  "caseSeoTitle": "Case Details | Lawyer",
+  "caseSeoDescription": "Your case details.",
+  "taskSeoTitle": "Task Details | Lawyer",
+  "taskSeoDescription": "Your task details."
 }

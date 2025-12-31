@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 import PageHeader from "@/components/common/PageHeader";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "https://fawaz-law-firm.apphub.my.id";
-const CONSULT_URL = `${API_BASE}/client/consultations`;
+const CONSULT_URL = `${API_BASE}/user/consultations`;
 const MAX_FILE_SIZE_MB = 5;
 const DAY_INDEX = {
   sunday: 0,

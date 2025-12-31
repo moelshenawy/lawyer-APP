@@ -8,7 +8,7 @@ const Contact = () => {
   return (
     <>
       <HeadProvider>
-        <Title>مكتب فواز للمحاماة | تواصل معنا </Title>
+        <Title>{t("seoTitle", "مكتب فواز للمحاماة | تواصل معنا")}</Title>
 
         <Meta name="description" content={t("metaDescription")} />
       </HeadProvider>

@@ -28,5 +28,7 @@
     "yearsAgo": "{{count}} years ago",
     "yearsAgo_one": "{{count}} year ago",
     "yearsAgo_other": "{{count}} years ago"
-  }
+  },
+  "seoTitle": "Notifications | Lawyer",
+  "seoDescription": "Your notifications page."
 }

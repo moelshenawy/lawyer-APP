@@ -1,8 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import styles from "./ChatPerson.module.scss";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import { IoIosArrowForward } from "react-icons/io";
 import { useNavigate, useParams } from "react-router-dom";
 
 // Utility for formatted time + date
@@ -57,97 +53,105 @@ const ChatPerson = () => {
   };
 
   return (
-    <div className={`${styles.page}`} dir="rtl">
-
-      {/* Top bar */}
-      <div className={styles.topbar}>
-        <div
-          className={styles.rightGroup}
-          onClick={handleBack}
-          role="button"
-          tabIndex={0}
-        >
-          <IoIosArrowForward size={24} />
-          <img
-            src="/assets/imgs/client.png"
-            width={32}
-            height={32}
-            alt="user"
-            className={styles.avatar}
-          />
-          فواز الداهش المحامي
-        </div>
-      </div>
-
-      {/* Chat Body */}
-      <div ref={bodyRef} className={`${styles.body} flex flex-col gap-4`}>
-        {messages.map((msg, i) => (
-          <div
-            key={i}
-            className={`flex ${
-              msg.sender === "user"
-                ? "justify-end"
-                : "justify-start items-center gap-2"
-            }`}
-          >
-            <div className={styles.messageWrapper}>
-              <div
-                className={`${styles.bubble} ${
-                  msg.sender === "user" ? styles.userBubble : styles.receiverBubble
-                }`}
-              >
-                {msg.text}
+    <>
+            {/* <div className={stylesEmpty.empty}>
+              <div className={stylesEmpty.emptyContent}>
+                <p className={stylesEmpty.emptyTitle}>{t("documents.emptyTitle")}</p>
+                <p className={stylesEmpty.emptySubtitle}>{t("documents.emptySubtitle")}</p>
               </div>
+            </div> */}
+    </>
+    // <div className={`${styles.page}`} dir="rtl">
 
-              {/* message time */}
-              <div className={styles.time}>{msg.time}</div>
-            </div>
+    //   {/* Top bar */}
+    //   <div className={styles.topbar}>
+    //     <div
+    //       className={styles.rightGroup}
+    //       onClick={handleBack}
+    //       role="button"
+    //       tabIndex={0}
+    //     >
+    //       <IoIosArrowForward size={24} />
+    //       <img
+    //         src="/assets/imgs/client.png"
+    //         width={32}
+    //         height={32}
+    //         alt="user"
+    //         className={styles.avatar}
+    //       />
+    //       فواز الداهش المحامي
+    //     </div>
+    //   </div>
 
-            {msg.sender === "receiver" && (
-              <img
-                src="/assets/imgs/client.png"
-                width={32}
-                height={32}
-                alt="user"
-                className={styles.avatarSmall}
-              />
-            )}
-          </div>
-        ))}
-      </div>
+    //   {/* Chat Body */}
+    //   <div ref={bodyRef} className={`${styles.body} flex flex-col gap-4`}>
+    //     {messages.map((msg, i) => (
+    //       <div
+    //         key={i}
+    //         className={`flex ${
+    //           msg.sender === "user"
+    //             ? "justify-end"
+    //             : "justify-start items-center gap-2"
+    //         }`}
+    //       >
+    //         <div className={styles.messageWrapper}>
+    //           <div
+    //             className={`${styles.bubble} ${
+    //               msg.sender === "user" ? styles.userBubble : styles.receiverBubble
+    //             }`}
+    //           >
+    //             {msg.text}
+    //           </div>
 
-      {/* Quick replies */}
-      <div className={styles.quick}>
-        <Swiper spaceBetween={10} slidesPerView="auto">
-          {quickReplies.map((q, i) => (
-            <SwiperSlide key={i} className="!w-auto">
-              <button className={styles.quickBtn} onClick={() => handleSend(q)}>
-                {q}
-              </button>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
+    //           {/* message time */}
+    //           <div className={styles.time}>{msg.time}</div>
+    //         </div>
 
-      {/* Footer Input */}
-      <div className={styles.footer}>
-        <button className={styles.circleBtn}>
-          <img src="/assets/icons/mice.svg" width={30} height={30} alt="mic" />
-        </button>
+    //         {msg.sender === "receiver" && (
+    //           <img
+    //             src="/assets/imgs/client.png"
+    //             width={32}
+    //             height={32}
+    //             alt="user"
+    //             className={styles.avatarSmall}
+    //           />
+    //         )}
+    //       </div>
+    //     ))}
+    //   </div>
 
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="اكتب رسالتك..."
-          onKeyDown={(e) => e.key === "Enter" && handleSend()}
-        />
+    //   {/* Quick replies */}
+    //   <div className={styles.quick}>
+    //     <Swiper spaceBetween={10} slidesPerView="auto">
+    //       {quickReplies.map((q, i) => (
+    //         <SwiperSlide key={i} className="!w-auto">
+    //           <button className={styles.quickBtn} onClick={() => handleSend(q)}>
+    //             {q}
+    //           </button>
+    //         </SwiperSlide>
+    //       ))}
+    //     </Swiper>
+    //   </div>
 
-        <button className={styles.sendBtn} onClick={() => handleSend()}>
-          إرسال
-        </button>
-      </div>
-    </div>
+    //   {/* Footer Input */}
+    //   <div className={styles.footer}>
+    //     <button className={styles.circleBtn}>
+    //       <img src="/assets/icons/mice.svg" width={30} height={30} alt="mic" />
+    //     </button>
+
+    //     <input
+    //       type="text"
+    //       value={input}
+    //       onChange={(e) => setInput(e.target.value)}
+    //       placeholder="اكتب رسالتك..."
+    //       onKeyDown={(e) => e.key === "Enter" && handleSend()}
+    //     />
+
+    //     <button className={styles.sendBtn} onClick={() => handleSend()}>
+    //       إرسال
+    //     </button>
+    //   </div>
+    // </div>
   );
 };
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { HeadProvider, Title } from "react-head";
+import { HeadProvider, Title, Meta } from "react-head";
 
 export default function NotFound() {
   const { lng } = useParams();
@@ -13,7 +13,8 @@ export default function NotFound() {
   return (
     <>
       <HeadProvider>
-        <Title>مكتب فواز للمحاماة | الرابط غير موجود </Title>
+        <Title>{t("seoTitle", "صفحة غير موجودة | المحامي")}</Title>
+        <Meta name="description" content={t("seoDescription", "Page not found.")} />
       </HeadProvider>
 
       <section className="py-12 sm:py-16">

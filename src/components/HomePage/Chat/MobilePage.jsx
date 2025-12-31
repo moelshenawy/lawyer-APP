@@ -10,7 +10,12 @@ import AudioPlayer from "../../audio/AudioPlayer";
 import VoiceRecorderBar from "./VoiceRecorderBar";
 import { useTranslation } from "react-i18next";
 
-const BASE = "https://fawaz-law-firm.apphub.my.id/api/client/ai";
+
+const API_BASE = (
+  import.meta.env.VITE_API_BASE_URL || "https://fawaz-law-firm.apphub.my.id/api"
+).replace(/\/$/, "");
+
+  const BASE = `${API_BASE}/user/ai`;
 
 const blobToBase64 = (blob) =>
   new Promise((resolve, reject) => {
@@ -344,7 +349,7 @@ const MobileChatPage = () => {
       </div>
 
       {/* QUICK REPLIES */}
-      <div className={styles.quick}>
+      {/* <div className={styles.quick}>
         <Swiper spaceBetween={10} slidesPerView="auto">
           {quickReplies.map((q, i) => (
             <SwiperSlide key={i} className="!w-auto">
@@ -354,7 +359,7 @@ const MobileChatPage = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-      </div>
+      </div> */}
 
       {/* FOOTER */}
       <div className={styles.footer}>

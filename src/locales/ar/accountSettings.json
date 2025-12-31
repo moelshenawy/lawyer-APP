@@ -79,5 +79,7 @@
   "cancel": "إلغاء",
   "deleteConfirmEmailLabel": "اكتب البريد الإلكتروني للتأكيد",
   "checkingAccountEmail": "جاري التحقق من بريد الحساب...",
-  "biometricRequiredHint": "سيُطلب منك تسجيل الدخول بالبصمة قبل الحذف داخل التطبيق."
+  "biometricRequiredHint": "سيُطلب منك تسجيل الدخول بالبصمة قبل الحذف داخل التطبيق.",
+  "seoTitle": "إعدادات الحساب | المحامي",
+  "seoDescription": "إعدادات الحساب الخاصة بك."
 }

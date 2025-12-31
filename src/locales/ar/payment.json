@@ -30,5 +30,9 @@
   "pageTitle": "الدفع",
   "amountDue": "المبلغ المستحق:",
   "paymentMethodTitle": "وسيلة الدفع",
-  "pay": "الدفع"
+  "pay": "الدفع",
+  "seoTitle": "الدفع | المحامي",
+  "seoDescription": "صفحة الدفع الخاصة بك.",
+  "successSeoTitle": "نجاح العملية | المحامي",
+  "successSeoDescription": "تمت العملية بنجاح."
 }

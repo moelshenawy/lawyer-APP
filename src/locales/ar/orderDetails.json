@@ -3,8 +3,10 @@
     "details": "التفاصيل",
     "docs": "المستندات",
     "invoices": "الفواتير",
-    "info": "المعلومات المطلوبة"
+    "info": "المعلومات"
   },
+  "close": "إغلاق",
+
   "orderIdNotFound": "لم يتم العثور على رقم الطلب.",
   "fetchDetailsFailed": "فشل في جلب تفاصيل الطلب",
   "emptyDetailsTitle": "لا توجد تفاصيل حتى الآن",
@@ -70,5 +72,17 @@
     "emptySubtitle": "عندما نحتاج منك معلومات هامة سوف تظهر هنا",
     "send": "إرسال",
     "sending": "جارى الإرسال..."
-  }
+  },
+  "updates": {
+    "title": "التحديثات",
+    "viewAttachment": "عرض المرفق",
+    "addUpdatePlaceholder": "اضف تحديث",
+    "failedToAddUpdate": "فشل في إضافة التحديث"
+  },
+  "orderSeoTitle": "تفاصيل الطلب | المحامي",
+  "orderSeoDescription": "تفاصيل الطلب الخاص بك.",
+  "caseSeoTitle": "تفاصيل القضية | المحامي",
+  "caseSeoDescription": "تفاصيل القضية الخاصة بك.",
+  "taskSeoTitle": "تفاصيل المهمة | المحامي",
+  "taskSeoDescription": "تفاصيل المهمة الخاصة بك."
 }

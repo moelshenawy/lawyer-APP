@@ -8,8 +8,8 @@ import { useTranslation } from "react-i18next";
 
 const DIGITS = 4;
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "https://fawaz-law-firm.apphub.my.id";
-const VERIFY_URL = `${API_BASE}/client/2fa/verify`;
-const LOGIN_URL = `${API_BASE}/client/login`;
+const VERIFY_URL = `${API_BASE}/user/2fa/verify`;
+const LOGIN_URL = `${API_BASE}/user/login`;
 
 const VerifyPage = () => {
   const { t } = useTranslation("verify");

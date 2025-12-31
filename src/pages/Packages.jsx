@@ -1,14 +1,15 @@
 import PackagesPage from "@/components/PackagesPage";
 import React from "react";
-
 import { HeadProvider, Title, Meta } from "react-head";
+import { useTranslation } from "react-i18next";
 
 const Packages = () => {
+  const { t } = useTranslation("packages");
   return (
     <>
       <HeadProvider>
-        <Title>مكتب فواز للمحاماة | الباقات </Title>
-        <Meta name="description" content="Lawyer Client — chat and management app." />
+        <Title>{t("seoTitle", "الباقات | المحامي")}</Title>
+        <Meta name="description" content={t("seoDescription", "Packages page")} />
       </HeadProvider>
       <>
         <PackagesPage />

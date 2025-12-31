@@ -36,5 +36,14 @@
   "consultationConfirmedDescription": "تم تأكيد موعد الاستشارة الجديد بنجاح.",
   "consultation": "استشارة",
   "setAppointment": "تحديد الموعد",
-  "meetingLink": "رابط الاجتماع"
+  "meetingLink": "رابط الاجتماع",
+  "clientId": "رقم العميل",
+  "clientName": "اسم العميل",
+  "clientEmail": "البريد الإلكتروني",
+  "clientPhone": "رقم الهاتف",
+  "hasCase": "لديه قضية",
+  "yes": "نعم",
+  "no": "لا",
+  "seoTitle": "المواعيد | المحامي",
+  "seoDescription": "صفحة المواعيد الخاصة بك."
 }

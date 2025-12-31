@@ -345,8 +345,8 @@ const AccountSettings = () => {
   return (
     <>
       <HeadProvider>
-        <Title>مكتب فواز للمحاماة | حسابي</Title>
-        <Meta name="description" content={t("headDescription")} />
+        <Title>{t("seoTitle", "إعدادات الحساب | المحامي")}</Title>
+        <Meta name="description" content={t("seoDescription", "Account settings page")} />
       </HeadProvider>
       <PageHeader title={t("pageHeader")} />
 

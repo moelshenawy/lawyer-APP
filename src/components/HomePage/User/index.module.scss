@@ -4,6 +4,11 @@
 
   .user_info {
     .img_container {
+      img {
+        height: 34px;
+        width: 34px;
+        object-fit: contain;
+      }
     }
 
     .text_container {

@@ -9,7 +9,7 @@ import axiosClient from "@/api/axiosClient";
 import Skeleton from "@/components/Skeleton";
 import StatusPopup from "@/components/common/StatusPopup";
 import PageHeader from "@/components/common/PageHeader";
-import { HeadProvider, Title } from "react-head";
+import { HeadProvider, Title, Meta } from "react-head";
 
 const fallbackIcons = [
   "/assets/icons/services/1.svg",
@@ -157,7 +157,8 @@ const ServicePage = () => {
   return (
     <>
       <HeadProvider>
-        <Title>مكتب فواز للمحاماة | الخدمات القانونية </Title>
+        <Title>{t("seoTitle", "المحامي | الخدمات القانونية")}</Title>
+        <Meta name="description" content={t("seoDescription", "Legal services page")} />
       </HeadProvider>
       <section className={`${styles.services_page} `} dir={dir}>
         <PageHeader title={t("title")} />

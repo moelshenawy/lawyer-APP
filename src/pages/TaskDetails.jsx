@@ -3,17 +3,17 @@ import { HeadProvider, Title, Meta } from "react-head";
 import OrderDetails from "@/components/OrdersPage/OrderDetails";
 import { useTranslation } from "react-i18next";
 
-const OrderDetailsPage = () => {
+const TaskDetails = () => {
   const { t } = useTranslation("orderDetails");
   return (
     <>
       <HeadProvider>
-        <Title>{t("orderSeoTitle", "تفاصيل الطلب | المحامي")}</Title>
-        <Meta name="description" content={t("orderSeoDescription", "Lawyer Client order details")} />
+        <Title>{t("taskSeoTitle", "تفاصيل المهمة | المحامي")}</Title>
+        <Meta name="description" content={t("taskSeoDescription", "Task details page")} />
       </HeadProvider>
-      <OrderDetails />
+      <OrderDetails viewType="task" />
     </>
   );
 };
 
-export default OrderDetailsPage;
+export default TaskDetails;

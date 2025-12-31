@@ -98,7 +98,6 @@ const PaymentsTap = ({ payments }) => {
                 <div className={styles.invoiceDetailRow}>
                   {t("payments.invoiceAmount")} {payment.amount} {payment.currency}
                 </div>
-                {/* <div className={styles.invoiceDetailRow}>تاريخ الإصدار: {payment.issue_date}</div> */}
                 <div className={styles.invoiceDetailRow}>
                   {t("payments.dueDate")} {payment.due_date}
                 </div>
@@ -108,7 +107,6 @@ const PaymentsTap = ({ payments }) => {
                   </div>
                 ) : null}
 
-                {/* زر إدفع الآن لو الفاتورة لسه Pending */}
                 {isSent && (
                   <div className="w-[100%] flex">
                     <button

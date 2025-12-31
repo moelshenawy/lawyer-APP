@@ -1,9 +1,15 @@
 import { HeadProvider, Title, Meta } from "react-head";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-hot-toast";
 import styles from "./Home.module.scss";
 import User from "@/components/HomePage/User";
+import TasksCard from "@/components/TasksCard";
+import StatusPopup from "@/components/common/StatusPopup";
+import { clockIn, clockOut } from "@/api/user";
+import i18n from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 const notifications = [
   {
@@ -18,135 +24,21 @@ const notifications = [
   },
 ];
 
-const taskGroups = [
-  {
-    title: "مهام لم تبدأ بعد",
-    link: "عرض المزيد",
-    tasks: [
-      {
-        age: "منذ يومين",
-        priority: "متوسطة",
-        title: "نقل ملكية",
-        description:
-          "المطلوب هو استلام ملف نقل الملكية والتأكد من جميع تفاصيله القانونية. تشمل المهمة مراجعة المستندات المطلوبة، التأكد من صحة بيانات الأطراف...",
-        date: "12 يناير 2026",
-        time: "9:00 AM",
-      },
-      {
-        age: "منذ يومين",
-        priority: "متوسطة",
-        title: "نقل ملكية",
-        description:
-          "المطلوب هو استلام ملف نقل الملكية والتأكد من جميع تفاصيله القانونية. تشمل المهمة مراجعة المستندات المطلوبة، التأكد من صحة بيانات الأطراف...",
-        date: "12 يناير 2026",
-        time: "9:00 AM",
-      },
-    ],
-  },
-  {
-    title: "مهام قيد التنفيذ",
-    link: "عرض المزيد",
-    tasks: [
-      {
-        age: "منذ يومين",
-        priority: "متوسطة",
-        title: "نقل ملكية",
-        description:
-          "المطلوب هو استلام ملف نقل الملكية والتأكد من جميع تفاصيله القانونية. تشمل المهمة مراجعة المستندات المطلوبة، التأكد من صحة بيانات الأطراف...",
-        date: "12 يناير 2026",
-        time: "9:00 AM",
-      },
-    ],
-  },
-];
-
-const BellIcon = () => (
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path
-      d="M12 2c-3.2 0-5.8 2.6-5.8 5.8v2.8l-1.6 2.1c-.3.4 0 1 .5 1h13.8c.5 0 .8-.6.5-1l-1.6-2.1V7.8C17.8 4.6 15.2 2 12 2Z"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-    />
-    <path
-      d="M9.6 18.2c.4 1.1 1.5 1.8 2.7 1.8s2.3-.7 2.7-1.8"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-    />
-  </svg>
-);
-
-const ChatIcon = () => (
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path
-      d="M5 4.5h14c1 0 1.8.8 1.8 1.8v8.1c0 1-.8 1.8-1.8 1.8H9.2l-3.5 3c-.5.4-1.2 0-1.2-.7v-2.3H5c-1 0-1.8-.8-1.8-1.8V6.3C3.2 5.3 4 4.5 5 4.5Z"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-    />
-    <circle cx="8.4" cy="10.8" r="1.1" fill="currentColor" />
-    <circle cx="12" cy="10.8" r="1.1" fill="currentColor" />
-    <circle cx="15.6" cy="10.8" r="1.1" fill="currentColor" />
-  </svg>
-);
-
-const SparkleChatIcon = () => (
-  <svg viewBox="0 0 32 32" aria-hidden="true">
-    <path
-      d="M6 7.5h16c1.4 0 2.5 1.1 2.5 2.5v9.8c0 1.4-1.1 2.5-2.5 2.5H13l-4.4 3.6c-.7.6-1.6 0-1.6-.8v-2.8H6c-1.4 0-2.5-1.1-2.5-2.5V10c0-1.4 1.1-2.5 2.5-2.5Z"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-    />
-    <path
-      d="M22.5 6.5l1.2-2.4 1.2 2.4 2.4 1.2-2.4 1.2-1.2 2.4-1.2-2.4-2.4-1.2 2.4-1.2Z"
-      fill="currentColor"
-    />
-  </svg>
-);
-
-const ScaleIcon = () => (
-  <svg viewBox="0 0 32 32" aria-hidden="true">
-    <path
-      d="M16 5v20M8 10h16M10.5 10l-4 7h8l-4-7ZM25.5 10l-4 7h8l-4-7Z"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
-const FlagIcon = () => (
-  <svg viewBox="0 0 16 16" aria-hidden="true">
-    <path d="M3 2.5V13.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-    <path d="M4.5 3h7l-1.6 2 1.6 2h-7V3Z" fill="currentColor" />
-  </svg>
-);
-
-const CalendarIcon = () => (
-  <svg viewBox="0 0 20 20" aria-hidden="true">
-    <rect x="3" y="4.5" width="14" height="12" rx="2" fill="none" stroke="currentColor" />
-    <path d="M3 7.5h14" stroke="currentColor" />
-    <path d="M6.2 3v3M13.8 3v3" stroke="currentColor" strokeLinecap="round" />
-  </svg>
-);
-
-const ClockIcon = () => (
-  <svg viewBox="0 0 20 20" aria-hidden="true">
-    <circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" />
-    <path d="M10 6.2v4.2l2.8 1.6" stroke="currentColor" strokeLinecap="round" />
-  </svg>
-);
-
 const Home = () => {
-  const { user, loading } = useContext(AuthContext);
+  const { user, loading, refreshAccount } = useContext(AuthContext);
   const navigate = useNavigate();
   const { lng } = useParams();
   const base = `/${lng || "ar"}`;
+
+  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [attendanceType, setAttendanceType] = useState(null); // 'clockIn' or 'clockOut'
+  const [attendanceData, setAttendanceData] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const attendance = user?.attendance_today;
+  const isClockedIn = !!attendance?.check_in_at_iso;
+  const isClockedOut = !!attendance?.check_out_at_iso;
 
   useEffect(() => {
     if (!loading && !user) {
@@ -154,42 +46,178 @@ const Home = () => {
     }
   }, [loading, user, navigate, base]);
 
+  const handleAcceptClick = () => {
+    setAttendanceType("clockIn");
+    setShowConfirmPopup(true);
+  };
+
+  const handleRejectClick = () => {
+    setAttendanceType("clockOut");
+    setShowConfirmPopup(true);
+  };
+
+  const handleConfirmYes = async () => {
+    setIsProcessing(true);
+    setShowConfirmPopup(false);
+
+    try {
+      const response = attendanceType === "clockIn" 
+        ? await clockIn() 
+        : await clockOut();
+
+      const { data } = response;
+
+      if (data?.success) {
+        setAttendanceData(data.data);
+        setShowSuccessPopup(true);
+        toast.success(data.message || "تم التسجيل بنجاح");
+        await refreshAccount(); // Update user data with latest attendance
+      } else {
+        toast.error("فشل في تسجيل الحضور");
+      }
+    } catch (error) {
+      const message = error?.response?.data?.message || "حدث خطأ أثناء التسجيل";
+      toast.error(message);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleConfirmNo = () => {
+    setShowConfirmPopup(false);
+    setAttendanceType(null);
+  };
+
+  const handleSuccessClose = () => {
+    setShowSuccessPopup(false);
+    setAttendanceData(null);
+    setAttendanceType(null);
+  };
+
+  const { t } = useTranslation("home");
+
   if (loading || !user) return null;
 
   return (
     <>
       <HeadProvider>
-        <Title>الرئيسية | المحامي</Title>
-        <Meta name="description" content="Lawyer client home page." />
+        <Title>{t("seoTitle", "الرئيسية | المحامي")}</Title>
+        <Meta name="description" content={t("seoDescription", "Lawyer client home page.")} />
       </HeadProvider>
 
       <div className={styles.page}>
-        <section className={styles.banner}>
-          <p className={styles.bannerText}>تم رصد دخولك المكتب. هل تريد تسجيل حضورك؟</p>
-          <div className={styles.bannerActions}>
-            <button className={`${styles.bannerBtn} ${styles.reject}`} type="button">
-              <span className={styles.iconBox}>
-                <svg viewBox="0 0 20 20" aria-hidden="true">
-                  <path
-                    d="M5 5l10 10M15 5L5 15"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </span>
-            </button>
-            <button className={`${styles.bannerBtn} ${styles.accept}`} type="button">
-              <span className={styles.iconBox}>
-                <img src="/assets/icons/checked.svg" alt={"checked"} className="mb-6 w-24" />
-              </span>
-            </button>
+{attendance && (
+  <section className={styles.banner} dir={i18n.dir()}>
+    <div className={styles.attendanceHeader}>
+      <div className={styles.attendanceChip}>
+        {!isClockedIn && !isClockedOut && <span className={styles.chipPending}>غير مسجل</span>}
+        {isClockedIn && !isClockedOut && <span className={styles.chipIn}>مسجل حضور</span>}
+        {isClockedIn && isClockedOut && <span className={styles.chipDone}>اكتمل</span>}
+      </div>
+
+      {isProcessing && (
+        <div className={styles.processingHint} aria-live="polite">
+          جاري التسجيل...
+        </div>
+      )}
+    </div>
+
+    {/* Case 1: Not Clocked In yet */}
+    {!attendance.check_in_at_iso && (
+      <>
+        <p className={styles.bannerText}>
+          تم رصد دخولك المكتب. هل تريد تسجيل حضورك؟
+          <span className={styles.bannerSubText}>سيتم تسجيل الوقت الحالي تلقائيًا.</span>
+        </p>
+
+        <div className={styles.bannerActions}>
+          <button
+            className={`${styles.bannerBtn} ${styles.fingerprintBtn} ${styles.actionBtn}`}
+            type="button"
+            onClick={handleAcceptClick}
+            disabled={isProcessing}
+            aria-label="تسجيل الحضور"
+          >
+            <img src="/assets/icons/finger_print.svg" alt="fingerprint" />
+            <span className={styles.actionLabel}>تسجيل الحضور</span>
+          </button>
+        </div>
+      </>
+    )}
+
+    {/* Case 2: Clocked In, but not Clocked Out */}
+    {attendance.check_in_at_iso && !attendance.check_out_at_iso && (
+      <>
+        <p className={styles.bannerText}>
+          أنت مسجل حضور منذ {attendance.check_in_at_since}.
+          <span className={styles.bannerSubText}>
+            وقت الحضور: <strong>{attendance.check_in_at}</strong>
+          </span>
+        </p>
+
+        <div className={styles.bannerActions}>
+          <button
+            className={`${styles.bannerBtn} ${styles.logoutBtn} ${styles.actionBtn}`}
+            type="button"
+            onClick={handleRejectClick}
+            disabled={isProcessing}
+            aria-label="تسجيل الانصراف"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+            <span className={styles.actionLabel}>تسجيل الانصراف</span>
+          </button>
+        </div>
+      </>
+    )}
+
+    {/* Case 3: Clocked Out */}
+    {attendance.check_in_at_iso && attendance.check_out_at_iso && (
+      <div className={styles.attendanceDetails}>
+        <p className={styles.bannerText}>ملخص الحضور اليوم:</p>
+
+        <div className={styles.summaryGrid}>
+          <div className={styles.summaryItem}>
+            <span className={styles.summaryLabel}>وقت الحضور</span>
+            <span className={styles.summaryValue}>
+              {attendance.check_in_at} <small>({attendance.check_in_at_since})</small>
+            </span>
           </div>
-        </section>
+
+          <div className={styles.summaryItem}>
+            <span className={styles.summaryLabel}>وقت الانصراف</span>
+            <span className={styles.summaryValue}>
+              {attendance.check_out_at} <small>({attendance.check_out_at_since})</small>
+            </span>
+          </div>
+
+          <div className={styles.summaryItemWide}>
+            <span className={styles.summaryLabel}>إجمالي العمل</span>
+            <span className={styles.summaryValue}>
+              {(attendance.work_minutes)}
+            </span>
+          </div>
+        </div>
+      </div>
+    )}
+  </section>
+)}
+
 
         <User />
 
-        <section className={styles.section}>
+        <section className={styles.section} dir={"rtl"}>
           <h2 className={styles.sectionTitle}>اشعارات</h2>
           <div className={styles.notificationList}>
             {notifications.map((item) => (
@@ -210,50 +238,63 @@ const Home = () => {
           </div>
         </section>
 
-        <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>مهمات</h2>
-          <div className={styles.taskGroups}>
-            {taskGroups.map((group) => (
-              <div className={styles.taskGroup} key={group.title}>
-                <div className={styles.taskGroupHeader}>
-                  <h3>{group.title}</h3>
-                  <button className={styles.moreLink} type="button">
-                    {group.link}
-                  </button>
-                </div>
-                <div className={styles.taskList}>
-                  {group.tasks.map((task, index) => (
-                    <div className={styles.taskCard} key={`${task.title}-${index}`}>
-                      <div className={styles.taskMeta}>
-                        <span className={styles.taskBadge}>
-                          {task.priority}
-                          <FlagIcon />
-                        </span>
-                        <span className={styles.taskAge}>{task.age}</span>
-                      </div>
-                      <h4 className={styles.taskTitle}>{task.title}</h4>
-                      <p className={styles.taskDescription}>{task.description}</p>
-                      <div className={styles.taskFooter}>
-                        <span className={styles.deadlineLabel}>موعد التسليم</span>
-                        <div className={styles.deadlineInfo}>
-                          <span className={styles.deadlineItem}>
-                            <CalendarIcon />
-                            {task.date}
-                          </span>
-                          <span className={styles.deadlineItem}>
-                            <ClockIcon />
-                            {task.time}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+        <TasksCard />
       </div>
+
+      {/* Confirmation Popup */}
+      <StatusPopup
+        isOpen={showConfirmPopup}
+        status="confirm"
+        title={attendanceType === "clockIn" ? "تسجيل الحضور" : "تسجيل الانصراف"}
+        description={
+          attendanceType === "clockIn" 
+            ? "هل أنت متأكد أنك تريد تسجيل حضورك؟" 
+            : "هل أنت متأكد أنك تريد تسجيل انصرافك؟"
+        }
+        primaryAction={{
+          label: "نعم",
+          onClick: handleConfirmYes,
+          disabled: isProcessing
+        }}
+        secondaryAction={{
+          label: "لا",
+          onClick: handleConfirmNo,
+          disabled: isProcessing
+        }}
+        onClose={handleConfirmNo}
+        disableClose={isProcessing}
+      />
+
+      {/* Success Popup for Clock Out */}
+      <StatusPopup
+        isOpen={showSuccessPopup && attendanceType === "clockOut"}
+        status="success"
+        title="تم تسجيل الانصراف بنجاح"
+        bullets={attendanceData ? [
+          `وقت العمل: ${Math.floor(attendanceData.work_minutes)} دقيقة`,
+          `طريقة الانصراف: ${attendanceData.check_out_method_label}`,
+          `وقت الانصراف: ${attendanceData.check_out_at}`,
+          `منذ: ${attendanceData.check_out_at_since}`
+        ] : []}
+        primaryAction={{
+          label: "حسناً",
+          onClick: handleSuccessClose
+        }}
+        onClose={handleSuccessClose}
+      />
+
+      {/* Success Popup for Clock In */}
+      <StatusPopup
+        isOpen={showSuccessPopup && attendanceType === "clockIn"}
+        status="success"
+        title="تم تسجيل الحضور بنجاح"
+        description={attendanceData?.check_in_at || ""}
+        primaryAction={{
+          label: "حسناً",
+          onClick: handleSuccessClose
+        }}
+        onClose={handleSuccessClose}
+      />
     </>
   );
 };

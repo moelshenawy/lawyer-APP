@@ -7,12 +7,14 @@ import { useTranslation } from "react-i18next";
 
 const User = () => {
   const { user } = useContext(AuthContext);
+  const { account } = user;
+  const userName = account?.name;
+
   const location = useLocation();
   const { lng } = useParams();
   const base = `/${lng || "ar"}`;
   const notificationPath = `${base}/notification`;
   const isNotificationActive = location.pathname.endsWith("/notification");
-  const firstName = user?.first_name || user?.firstName || user?.name || "";
   const { t } = useTranslation("home");
 
   return (
@@ -21,7 +23,7 @@ const User = () => {
         <div className={`flex justify-between ${styles.sec_container}`}>
           <div className={`flex items-center gap-3 ${styles.user_info}`}>
             <div className={styles.img_container}>
-              <img src="/assets/imgs/logo.png" width={22} alt="user image" />
+              <img src={account?.avatar_url} width={22} alt="user image" />
             </div>
 
             <div className={styles.text_container}>
@@ -30,9 +32,10 @@ const User = () => {
               </div>
 
               <div className={styles.username}>
-                <p>{firstName} /محامى</p>
+                <p>{userName} /محامى</p>
               </div>
             </div>
+            
           </div>
 
           <div className={`flex gap-3 ${styles.sys_icons}`}>

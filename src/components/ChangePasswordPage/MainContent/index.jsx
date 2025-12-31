@@ -66,7 +66,7 @@ const ChangePasswordMain = () => {
     setLoading(true);
     const toastId = toast.loading(t("updating"));
     try {
-      const res = await axiosClient.post("/client/account/password", form);
+      const res = await axiosClient.post("/user/account/password", form);
       toast.success(res?.data?.message || t("success"), { id: toastId });
       setForm({
         current_password: "",
@@ -87,6 +87,37 @@ const ChangePasswordMain = () => {
 
       <form className={styles.formBox} onSubmit={handleSubmit}>
         <div className={styles.inlineRow}>
+
+            <div className={styles.fieldGroup}>
+          {/* Current Password */}
+        <label className={styles.labelRow}>
+          <span className="font-arabic">{t("currentPassword")}</span>
+        </label>
+        <div className={styles.inputWrap}>
+          <input
+            type={showPwd ? "text" : "password"}
+            placeholder={t("currentPlaceholder")}
+            className={`${styles.input} ${styles.inputHasIcon} ${
+              errors.current_password ? styles.errorBorder : ""
+            }`}
+              autoComplete="current-password"
+              value={form.current_password}
+              onChange={(e) => setForm({ ...form, current_password: e.target.value })}
+              disabled={loading}
+            />
+            <button
+              type="button"
+              className={styles.iconBtn}
+              onClick={() => setShowPwd((v) => !v)}
+              aria-label="toggle password visibility"
+            >
+              <EyeIcon slashed={!showPwd} />
+            </button>
+          </div>
+          {errors.current_password && <p className={styles.error}>{errors.current_password}</p>}
+        </div>
+
+        
           <div className={styles.fieldGroup}>
             {/* New Password */}
             <label className={styles.labelRow}>
@@ -145,34 +176,7 @@ const ChangePasswordMain = () => {
           </div>
         </div>
 
-        <div className={styles.fieldGroup}>
-          {/* Current Password */}
-        <label className={styles.labelRow}>
-          <span className="font-arabic">{t("currentPassword")}</span>
-        </label>
-        <div className={styles.inputWrap}>
-          <input
-            type={showPwd ? "text" : "password"}
-            placeholder={t("currentPlaceholder")}
-            className={`${styles.input} ${styles.inputHasIcon} ${
-              errors.current_password ? styles.errorBorder : ""
-            }`}
-              autoComplete="current-password"
-              value={form.current_password}
-              onChange={(e) => setForm({ ...form, current_password: e.target.value })}
-              disabled={loading}
-            />
-            <button
-              type="button"
-              className={styles.iconBtn}
-              onClick={() => setShowPwd((v) => !v)}
-              aria-label="toggle password visibility"
-            >
-              <EyeIcon slashed={!showPwd} />
-            </button>
-          </div>
-          {errors.current_password && <p className={styles.error}>{errors.current_password}</p>}
-        </div>
+      
         {errors.new_password_confirmation && (
           <p className={styles.error}>{errors.new_password_confirmation}</p>
         )}

@@ -4,7 +4,10 @@ import { useLocation, useParams, Link } from "react-router-dom";
 import { FiCheckCircle } from "react-icons/fi";
 import { AuthContext } from "@/context/AuthContext";
 
+import { useTranslation } from "react-i18next";
+
 const SuccessPage = () => {
+  const { t } = useTranslation("payment");
   const { lng } = useParams();
   const location = useLocation();
   const params = useMemo(() => new URLSearchParams(location.search), [location.search]);
@@ -15,9 +18,8 @@ const SuccessPage = () => {
   return (
     <>
       <HeadProvider>
-        <Title>مكتب فواز للمحاماة | تم الدفع </Title>
-
-        <Meta name="description" content="تم تفعيل الباقة المختارة بنجاح." />
+        <Title>{t("successSeoTitle", "نجاح العملية | المحامي")}</Title>
+        <Meta name="description" content={t("successSeoDescription", "Operation completed successfully")} />
       </HeadProvider>
 
       <section className="min-h-screen flex items-center justify-center" dir="rtl">

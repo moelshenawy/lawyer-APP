@@ -1,6 +1,6 @@
 import axiosClient from "./axiosClient";
 
-const PASSWORD_RESET_BASE = "/client/password/reset";
+const PASSWORD_RESET_BASE = "/user/password/reset";
 
 const buildErrorMessage = (error) => {
   const resp = error?.response?.data;

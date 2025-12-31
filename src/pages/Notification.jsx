@@ -98,8 +98,8 @@ const NotificationPage = () => {
   return (
     <section className={styles.page} dir="rtl">
       <HeadProvider>
-        <Title>مكتب فواز للمحاماة | الإشعارات </Title>
-        <Meta name="description" content={t("headDescription")} />
+        <Title>{t("seoTitle", "الإشعارات | المحامي")}</Title>
+        <Meta name="description" content={t("seoDescription", "Notifications page")} />
       </HeadProvider>
 
       <div className={`${styles.shell} container`}>
@@ -184,7 +184,6 @@ const NotificationPage = () => {
                   {actionUrl ? (
                     <a
                       href={actionUrl}
-                      target="_blank"
                       rel="noreferrer"
                       className={styles.itemLink}
                     >

@@ -6,13 +6,15 @@
 // import User from "@/components/HomePage/User";
 import UserOrders from "@/components/OrdersPage/UserOrders";
 import { HeadProvider, Title, Meta } from "react-head";
+import { useTranslation } from "react-i18next";
 
 const Orders = () => {
+  const { t } = useTranslation("orders");
   return (
     <>
       <HeadProvider>
-        <Title>مكتب فواز للمحاماة | الطلبات </Title>
-        <Meta name="description" content="Lawyer Client — chat and management app." />
+        <Title>{t("ordersSeoTitle", "مكتب فواز للمحاماة | الطلبات")}</Title>
+        <Meta name="description" content={t("ordersSeoDescription", "Lawyer Client — chat and management app.")} />
       </HeadProvider>
       <>
         <UserOrders />

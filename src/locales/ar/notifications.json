@@ -28,5 +28,7 @@
     "yearsAgo": "منذ {{count}} سنة",
     "yearsAgo_one": "منذ سنة واحدة",
     "yearsAgo_other": "منذ {{count}} سنوات"
-  }
+  },
+  "seoTitle": "الإشعارات | المحامي",
+  "seoDescription": "صفحة الإشعارات الخاصة بك."
 }

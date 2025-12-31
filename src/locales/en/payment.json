@@ -30,5 +30,9 @@
   "pageTitle": "Payment",
   "amountDue": "Amount due:",
   "paymentMethodTitle": "Payment method",
-  "pay": "Pay"
+  "pay": "Pay",
+  "seoTitle": "Payment | Lawyer",
+  "seoDescription": "Your payment page.",
+  "successSeoTitle": "Success | Lawyer",
+  "successSeoDescription": "Operation completed successfully."
 }

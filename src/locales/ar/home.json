@@ -32,5 +32,7 @@
   "subscribeConfirmTitle": "هل تريد الإشتراك في خدمة {{serviceTitle}}؟",
   "loading": "جاري...",
   "yes": "نعم",
-  "no": "لا"
+  "no": "لا",
+  "seoTitle": "الرئيسية | المحامي",
+  "seoDescription": "صفحة المحامي الرئيسية للعملاء."
 }

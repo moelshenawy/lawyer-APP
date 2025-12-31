@@ -53,7 +53,7 @@
   flex-direction: column;
   gap: 10px;
   width: 100%;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .infoRow {
@@ -217,75 +217,3 @@
   border: 1px solid currentColor;
 }
 
-@media (min-width: 768px) {
-  .card {
-    max-width: 540px;
-  }
-}
-
-@media (min-width: 992px) {
-  .contact {
-    padding: 120px 0 110px;
-    background: radial-gradient(circle at 14% 18%, rgba(0, 63, 111, 0.06), transparent 32%),
-      radial-gradient(circle at 88% 8%, rgba(0, 63, 111, 0.04), transparent 30%),
-      #ffffff;
-  }
-
-  .card {
-    max-width: none;
-  }
-
-  .grid {
-    grid-template-columns: 1.05fr 0.95fr;
-    grid-template-areas:
-      "info map"
-      "actions map";
-    align-items: start;
-    gap: 24px;
-    padding: 18px 16px;
-    background: #f7fbff;
-    border-radius: 20px;
-    box-shadow: 0 12px 32px rgba(13, 43, 73, 0.08);
-  }
-
-  .info {
-    align-items: flex-start;
-    text-align: right;
-    padding: 6px 12px;
-    gap: 20px;
-  }
-
-  .leadRows {
-    align-items: flex-start;
-  }
-
-  .infoRow {
-    justify-content: flex-start;
-  }
-
-  .locations {
-    gap: 14px;
-  }
-
-  .actions {
-    flex-direction: row;
-    justify-content: flex-start;
-    margin-top: 0;
-  }
-
-  .whatsappButton,
-  .callButton {
-    min-width: 180px;
-    padding-inline: 16px;
-  }
-
-  .mapCard {
-    min-height: 340px;
-  }
-}
-
-@media (min-width: 1200px) {
-  .grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}

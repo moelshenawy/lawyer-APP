@@ -16,5 +16,7 @@
   "createAccount": "إنشاء حساب",
   "or": "أو",
   "fingerprintLogin": "تسجيل الدخول بالبصمة",
-  "fingerprintLoginLoading": "جاري تسجيل الدخول بالبصمة..."
+  "fingerprintLoginLoading": "جاري تسجيل الدخول بالبصمة...",
+  "seoTitle": "تسجيل الدخول | المحامي",
+  "seoDescription": "صفحة تسجيل الدخول لمكتب المحاماة."
 }

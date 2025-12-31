@@ -23,55 +23,16 @@ const AccountSettingsPage = () => {
   const base = `/${lng || "ar"}`;
   const dir = (lng || "ar") === "ar" ? "rtl" : "ltr";
 
-  const activeSubscription =
-    user?.active_subscription ||
-    (Array.isArray(user?.subscriptions)
-      ? user.subscriptions.find((sub) => sub?.status === "active")
-      : null);
+  // ✅ Same shape as <User /> component: user.account
+  // Keep fallback to user to not break if shape changes.
+  const account = useMemo(() => user?.account ?? user ?? {}, [user]);
 
-  const planName =
-    activeSubscription?.subscription_plan?.title ||
-    activeSubscription?.subscription_plan?.name ||
-    activeSubscription?.plan?.title ||
-    activeSubscription?.plan?.name ||
-    activeSubscription?.name ||
-    null;
-
-  const planStatus = activeSubscription?.status || (user?.is_subscribed ? "active" : "inactive");
-  const planStatusLabel =
-    planStatus === "active"
-      ? t("statusActive")
-      : planStatus === "inactive"
-        ? t("statusInactive")
-        : planStatus === "pending"
-          ? t("statusPending")
-          : planStatus || t("dash");
-
-  const planEndsAt = activeSubscription?.ends_at || activeSubscription?.end_date || null;
-  const planStartsAt = activeSubscription?.starts_at || activeSubscription?.start_date || null;
-
-  const formatDateTime = (value) => {
-    if (!value) return t("notAvailable");
-    const dt = new Date(value);
-    if (Number.isNaN(dt.getTime())) return value;
-    const datePart = dt.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "numeric",
-      day: "numeric",
-    });
-    const timePart = dt
-      .toLocaleTimeString("en-US", {
-        hour: "numeric",
-        minute: "2-digit",
-        hour12: true,
-      })
-      .replace(/\s/g, "")
-      .toLowerCase();
-    return `${datePart} - ${timePart}`;
-  };
-
-  const planEndsAtFormatted = useMemo(() => formatDateTime(planEndsAt), [planEndsAt]);
-  const planStartsAtFormatted = useMemo(() => formatDateTime(planStartsAt), [planStartsAt]);
+  const accountName = account?.name || t("defaultClientName");
+  const accountEmailValue = account?.email || "";
+  const accountPhoneValue = account?.phone || "";
+  const isActive = Boolean(account?.is_active);
+  const lastLoginLabel = account?.last_login_at || "";
+  const lastLoginSince = account?.last_login_at_since || "";
 
   const [form, setForm] = useState({
     name: "",
@@ -89,19 +50,18 @@ const AccountSettingsPage = () => {
   const [isInApp, setIsInApp] = useState(false);
   const [biometricActivated, setBiometricActivated] = useState(false);
 
+  // ✅ Fill form from account (NOT user root fields)
   useEffect(() => {
     setForm({
-      name: user?.name || "",
-      email: user?.email || "",
-      phone: user?.phone || "",
+      name: account?.name || "",
+      email: account?.email || "",
+      phone: account?.phone || "",
     });
-  }, [user]);
+  }, [account?.name, account?.email, account?.phone]);
 
   useEffect(() => {
-    if (user?.email) {
-      setAccountEmail(user.email);
-    }
-  }, [user?.email]);
+    if (account?.email) setAccountEmail(account.email);
+  }, [account?.email]);
 
   useEffect(() => {
     let mounted = true;
@@ -126,12 +86,17 @@ const AccountSettingsPage = () => {
     };
   }, []);
 
+  // ✅ getAccount response now includes data.account.email
   const fetchLatestAccountEmail = useCallback(async () => {
     setAccountLoading(true);
     try {
       const res = await getAccount();
       const fetchedEmail =
-        res?.data?.data?.client?.email || res?.data?.client?.email || res?.data?.email || "";
+        res?.data?.data?.account?.email ||
+        res?.data?.account?.email ||
+        res?.data?.data?.email ||
+        res?.data?.email ||
+        "";
       if (fetchedEmail) {
         setAccountEmail(fetchedEmail);
         return fetchedEmail;
@@ -141,8 +106,8 @@ const AccountSettingsPage = () => {
     } finally {
       setAccountLoading(false);
     }
-    return accountEmail || user?.email || "";
-  }, [accountEmail, user?.email]);
+    return accountEmail || accountEmailValue || "";
+  }, [accountEmail, accountEmailValue]);
 
   useEffect(() => {
     if (!location?.hash) return;
@@ -172,24 +137,25 @@ const AccountSettingsPage = () => {
       next.phone = t("phoneInvalid");
     }
     return next;
-  }, [form]);
+  }, [form, t]);
 
   const isDirty = useMemo(() => {
-    const initialName = (user?.name || "").trim();
-    const initialEmail = (user?.email || "").trim();
-    const initialPhone = (user?.phone || "").trim();
+    const initialName = (account?.name || "").trim();
+    const initialEmail = (account?.email || "").trim();
+    const initialPhone = (account?.phone || "").trim();
 
     return (
       form.name.trim() !== initialName ||
       form.email.trim() !== initialEmail ||
       (form.phone || "").trim() !== initialPhone
     );
-  }, [form.email, form.name, form.phone, user?.email, user?.name, user?.phone]);
+  }, [form.email, form.name, form.phone, account?.email, account?.name, account?.phone]);
 
   const normalizedAccountEmail = useMemo(
     () => (accountEmail || "").trim().toLowerCase(),
     [accountEmail],
   );
+
   const emailMatches = useMemo(() => {
     const normalizedInput = confirmEmail.trim().toLowerCase();
     if (!normalizedInput || !normalizedAccountEmail) return false;
@@ -207,7 +173,7 @@ const AccountSettingsPage = () => {
     } else {
       setConfirmError("");
     }
-  }, [confirmEmail, emailMatches, normalizedAccountEmail]);
+  }, [confirmEmail, emailMatches, normalizedAccountEmail, t]);
 
   const showError = (key) => touched[key] && fieldErrors[key];
 
@@ -336,13 +302,14 @@ const AccountSettingsPage = () => {
   return (
     <>
       <HeadProvider>
-        <Title>مكتب فواز للمحاماة | حسابي</Title>
-        <Meta name="description" content={t("headDescription")} />
+        <Title>{t("seoTitle", "إعدادات الحساب | المحامي")}</Title>
+        <Meta name="description" content={t("seoDescription", "Account settings page")} />
       </HeadProvider>
+
       <PageHeader title={t("pageHeader")} />
 
       <div
-        className={`relative flex flex-col md:flex-row items-start w-full my-0 md:my-[158px] pb-[140px]  ${styles.page}`}
+        className={`relative flex flex-col md:flex-row items-start w-full  pb-[140px]  ${styles.page}`}
         dir={dir}
       >
         <section className={styles.content} id="settings">
@@ -352,114 +319,45 @@ const AccountSettingsPage = () => {
               <h1 className={styles.heroTitle}>{t("heroTitle")}</h1>
               <p className={styles.heroText}>{t("heroSubtitle")}</p>
             </div>
+
             <div className={styles.heroMeta}>
               <div className={styles.chip}>
                 <UserIcon size={16} />
-                <span>{user?.name || t("defaultClientName")}</span>
+                <span>{accountName}</span>
               </div>
+
               <div className={styles.chip}>
                 <PhoneIcon size={16} />
-                <span>{user?.phone || t("phoneNotAdded")}</span>
+                <span>{accountPhoneValue || t("phoneNotAdded")}</span>
               </div>
+
               <div className={styles.chip}>
                 <CalendarIcon size={16} />
                 <span>
-                  {t("accountStatusPrefix")} {user ? t("statusActive") : t("statusInactive")}
+                  {t("accountStatusPrefix")} {isActive ? t("statusActive") : t("statusInactive")}
                 </span>
               </div>
             </div>
           </div>
-
-          {/* <div className={styles.tabRow}>
-            <Link to={`${base}/account`} className={styles.tab}>
-              {t("overview")}
-            </Link>
-            <span className={`${styles.tab} ${styles.activeTab}`}>{t("tabAccountSettings")}</span>
-          </div> */}
 
           <div className={styles.infoGrid}>
             <div className={styles.infoCard}>
               <p className={styles.infoLabel}>{t("labelEmail")}</p>
               <p className={styles.infoValue}>{form.email || t("addEmail")}</p>
             </div>
+
             <div className={styles.infoCard}>
               <p className={styles.infoLabel}>{t("labelPhone")}</p>
               <p className={styles.infoValue}>{form.phone || t("addPhone")}</p>
             </div>
+
             <div className={styles.infoCard}>
-              <p className={styles.infoLabel}>{t("labelSubscription")}</p>
+              <p className={styles.infoLabel}>{t("labelStatus")}</p>
               <p className={styles.infoValue}>
-                {user?.is_subscribed ? t("subscriptionActivePlan") : t("subscriptionInactivePlan")}
+                {isActive ? t("statusActive") : t("statusInactive")}
+                {lastLoginSince ? ` • ${lastLoginSince}` : ""}
               </p>
-            </div>
-          </div>
-
-          <div className={styles.subCard}>
-            <div className={styles.subHead}>
-              <div>
-                <p className={styles.eyebrow}>{t("subscriptionEyebrow")}</p>
-                <h3 className={styles.subTitle}>
-                  {user?.is_subscribed ? t("subscriptionCurrent") : t("subscriptionNotSubscribed")}
-                </h3>
-                <p className={styles.subText}>{t("subscriptionHint")}</p>
-              </div>
-              <div
-                className={`${styles.subStatus} ${
-                  user?.is_subscribed ? styles.subActive : styles.subInactive
-                }`}
-              >
-                {user?.is_subscribed ? t("statusActive") : t("statusInactive")}
-              </div>
-            </div>
-            {user?.is_subscribed && (
-              <div className={styles.subBody}>
-                <div className={styles.subMetaItem}>
-                  <span className={styles.infoLabel}>{t("labelPlan")}</span>:{` `}
-                  <p className={styles.infoValue}>
-                    {user?.is_subscribed ? planName || t("unknownPlan") : t("dash")}
-                  </p>
-                </div>
-                <div className={styles.subMetaItem}>
-                  <span className={styles.infoLabel}>{t("labelStatus")}</span>:{` `}
-                  <p className={styles.infoValue}>{planStatusLabel}</p>
-                </div>
-                <div className={styles.subMetaItem}>
-                  <span className={styles.infoLabel}>{t("labelStartDate")}</span>:{` `}
-                  <p className={styles.infoValue}>
-                    {user?.is_subscribed ? planStartsAtFormatted : t("notAvailable")}
-                  </p>
-                </div>
-                <div className={styles.subMetaItem}>
-                  <span className={styles.infoLabel}>{t("labelEndDate")}</span>:{` `}
-                  <p className={styles.infoValue}>
-                    {user?.is_subscribed ? planEndsAtFormatted : t("notAvailable")}
-                  </p>
-                </div>
-                {/* <div className={styles.subMetaItem}>
-                  <span className={styles.infoLabel}>{t("labelPrice")}</span>:{` `}
-                  <span className={styles.infoValue}>{planPriceLabel}</span>
-                </div>
-                <div className={styles.subMetaItem}>
-                  <span className={styles.infoLabel}>{t("labelRenewal")}</span>:{` `}
-                  <span className={styles.infoValue}>{planAutoRenewLabel}</span>
-                </div> */}
-              </div>
-            )}
-
-            <div className={styles.subActions}>
-              {user?.is_subscribed ? (
-                <Link to={`${base}/packages`}>
-                  <div className={styles.actions}>
-                    <button type="submit" className={styles.saveBtn}>
-                      {t("manageSubscription")}
-                    </button>
-                  </div>
-                </Link>
-              ) : (
-                <Link to={`${base}/packages`} className={styles.saveBtn}>
-                  {t("subscribeNow")}
-                </Link>
-              )}
+              {lastLoginLabel ? <p className={styles.sectionText}>{lastLoginLabel}</p> : null}
             </div>
           </div>
 
@@ -506,7 +404,7 @@ const AccountSettingsPage = () => {
                 {showError("phone") && <span className={styles.error}>{fieldErrors.phone}</span>}
               </label>
 
-              <label className={styles.field}>
+              {/* <label className={styles.field}>
                 <span className={styles.label}>{t("labelEmail")}</span>
                 <input
                   type="email"
@@ -518,19 +416,16 @@ const AccountSettingsPage = () => {
                   disabled={loading}
                 />
                 {showError("email") && <span className={styles.error}>{fieldErrors.email}</span>}
-              </label>
+              </label> */}
             </div>
 
             <div className={styles.actions}>
-              {/* <Link to={`${base}/change-password`} className={styles.secondaryBtn}>
-                {t("changePassword")}
-              </Link> */}
-
               <button type="submit" className={styles.saveBtn} disabled={loading || !isDirty}>
                 {loading ? t("saving") : t("saveChanges")}
               </button>
             </div>
           </form>
+
           <ChangePasswordMain />
 
           <div className={styles.extraCard}>
@@ -555,10 +450,13 @@ const AccountSettingsPage = () => {
                   <Link to={`/en/account`} className={styles.secondaryBtn}>
                     English
                   </Link>
+                  <Link to={`/eu/account`} className={styles.secondaryBtn}>
+                    اوردو
+                  </Link>
                 </div>
               </div>
 
-              <div className={styles.extraItem}>
+              {/* <div className={styles.extraItem}>
                 <div>
                   <p className={styles.infoLabel}>{t("deleteAccount")}</p>
                   <p className={styles.sectionText}>{t("deleteAccountWarning")}</p>
@@ -566,7 +464,7 @@ const AccountSettingsPage = () => {
                 <button type="button" className={styles.dangerBtn} onClick={openDeleteModal}>
                   {t("requestDeleteAccount")}
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </section>
@@ -602,7 +500,7 @@ const AccountSettingsPage = () => {
             className={styles.input}
             value={confirmEmail}
             onChange={(e) => setConfirmEmail(e.target.value)}
-            placeholder={accountEmail || user?.email || "name@email.com"}
+            placeholder={accountEmail || accountEmailValue || "name@email.com"}
             disabled={deleteLoading || accountLoading}
             autoComplete="email"
           />

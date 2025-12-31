@@ -36,5 +36,14 @@
   "consultationConfirmedDescription": "The new consultation appointment has been confirmed successfully.",
   "consultation": "Consultation",
   "setAppointment": "Set appointment",
-  "meetingLink": "Meeting link"
+  "meetingLink": "Meeting link",
+  "clientId": "Client ID",
+  "clientName": "Client Name",
+  "clientEmail": "Client Email",
+  "clientPhone": "Client Phone",
+  "hasCase": "Has Case",
+  "yes": "Yes",
+  "no": "No",
+  "seoTitle": "Appointments | Lawyer",
+  "seoDescription": "Your appointments page."
 }

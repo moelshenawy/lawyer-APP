@@ -7,14 +7,8 @@ import Hypered from "@/utils/hyperedBridge";
 import { AuthContext } from "@/context/AuthContext";
 import { useTranslation } from "react-i18next";
 
-// ✅ NEW
-import { GoogleLogin } from "@react-oauth/google";
-
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "https://fawaz-law-firm.apphub.my.id";
-const LOGIN_URL = `${API_BASE}/client/login`;
-
-// ✅ NEW
-const GOOGLE_AUTH_URL = `${API_BASE}/client/auth/google`;
+const LOGIN_URL = `${API_BASE}/user/login`;
 
 const LoginPage = () => {
   const { t } = useTranslation("authLogin");
@@ -30,7 +24,6 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
 
   // ✅ NEW
-  const [googleLoading, setGoogleLoading] = useState(false);
   const [isNativeApp, setIsNativeApp] = useState(false);
   const [nativeLoginPending, setNativeLoginPending] = useState(false);
 
@@ -130,9 +123,8 @@ const LoginPage = () => {
     const toastId = toast.loading(t("loginRequestLoading"));
     try {
       const payload = {
-        login: form.login.trim(),
+        email: form.login.trim(),
         password: form.password,
-        channel: "email",
       };
       const res = await fetch(LOGIN_URL, {
         method: "POST",
@@ -147,176 +139,38 @@ const LoginPage = () => {
 
         throw new Error(message);
       }
+      const token = data?.data?.token;
 
+      // ✅ IF TOKEN EXISTS → LOGIN SUCCESS
+      if (token) {
+        localStorage.setItem("access_token", token);
+        loginWithToken?.(token);
+
+        toast.success(
+          data?.message || t("loginSuccess", { defaultValue: "Logged in successfully" }),
+          { id: toastId },
+        );
+
+        navigate(base, { replace: true });
+        return;
+      }
+
+      // ❗ Otherwise → fallback to 2FA
       toast.success(t("codeSentToEmail"), { id: toastId });
+
       const pending = {
-        login: payload.login,
+        login: payload.email,
         password: payload.password,
-        channel: payload.channel,
         deviceName: navigator.userAgent || "Web",
       };
+
       sessionStorage.setItem("pending_login", JSON.stringify(pending));
-      const basePath = `/${lng || "ar"}`;
-      navigate(`${basePath}/verify`, { state: { pending } });
+      navigate(`${base}/verify`, { state: { pending } });
     } catch (err) {
       console.log(err.message, "login error");
       toast.error(err.message, { id: toastId });
     } finally {
       setLoading(false);
-    }
-  };
-
-  // ✅ NEW: Google handler
-  // const handleGoogleCredential = async (credential) => {
-  //   if (!credential || googleLoading || loading) return;
-
-  //   setGoogleLoading(true);
-  //   const toastId = toast.loading(
-  //     t("googleLoginLoading", { defaultValue: "Logging in with Google..." }),
-  //   );
-
-  //   try {
-  //     const payload = {
-  //       credential,
-  //       device_name: navigator.userAgent || "Web",
-  //     };
-
-  //     const res = await fetch(GOOGLE_AUTH_URL, {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(payload),
-  //     });
-
-  //     const data = await res.json().catch(() => ({}));
-
-  //     if (!res.ok) {
-  //       const message =
-  //         data?.message ||
-  //         (Array.isArray(data?.errors) ? data.errors.join("، ") : "Google login failed");
-  //       throw new Error(message);
-  //     }
-
-  //     const token = data?.token;
-  //     if (!token) throw new Error("No token returned from server.");
-
-  //     persistAccessToken(token);
-  //     loginWithToken?.(token);
-
-  //     toast.success(
-  //       data?.message || t("googleLoginSuccess", { defaultValue: "Signed in successfully." }),
-  //       { id: toastId },
-  //     );
-
-  //     navigate(base, { replace: true });
-  //   } catch (err) {
-  //     toast.error(err?.message || "Google login failed", { id: toastId });
-  //   } finally {
-  //     setGoogleLoading(false);
-  //   }
-  //   return token;
-  // };
-
-  const loginWithBackend = async (idToken, options = {}) => {
-    if (!idToken) {
-      throw new Error("Missing Google credential");
-    }
-
-    const resolvedDevice = options.deviceName || navigator.userAgent || "Web";
-
-    if (import.meta.env.DEV) {
-      console.log("GOOGLE_AUTH_URL", GOOGLE_AUTH_URL);
-    }
-
-    const res = await fetch(GOOGLE_AUTH_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        credential: idToken,
-        device_name: resolvedDevice,
-      }),
-    });
-
-    const data = await res.json().catch(() => ({}));
-
-    if (!res.ok) {
-      if (import.meta.env.DEV) {
-        console.log("Google auth failed", res.status, data);
-      }
-      const message =
-        data?.message ||
-        (Array.isArray(data?.errors) ? data.errors.join("OO ") : "Google login failed");
-      throw new Error(message);
-    }
-
-    const token = data?.token;
-    if (!token) {
-      throw new Error("No token returned from server.");
-    }
-
-    persistAccessToken(token);
-    loginWithToken?.(token);
-
-    return data;
-  };
-
-  const handleGoogleCredential = async (credential) => {
-    if (!credential || googleLoading || loading) return;
-
-    setGoogleLoading(true);
-    const toastId = toast.loading(
-      t("googleLoginLoading", { defaultValue: "Logging in with Google..." }),
-    );
-
-    try {
-      const data = await loginWithBackend(credential);
-
-      toast.success(
-        data?.message || t("googleLoginSuccess", { defaultValue: "Signed in successfully." }),
-        { id: toastId },
-      );
-
-      navigate(base, { replace: true });
-    } catch (err) {
-      toast.error(err?.message || "Google login failed", { id: toastId });
-    } finally {
-      setGoogleLoading(false);
-    }
-  };
-
-  const handleNativeGoogleLogin = async () => {
-    if (nativeLoginPending || googleLoading || loading) return;
-
-    const toastId = toast.loading(
-      t("googleLoginLoading", { defaultValue: "Logging in with Google..." }),
-    );
-    setNativeLoginPending(true);
-
-    try {
-      const response = await Hypered.loginWithGoogle();
-      const payload = response?.data ?? response?.userData ?? response;
-      const idToken = payload?.idToken ?? payload?.id_token;
-
-      if (!idToken) {
-        if (import.meta.env.DEV) {
-          console.error("Native Google response:", response);
-        }
-        throw new Error("Native Google login did not return an ID token");
-      }
-
-      const data = await loginWithBackend(idToken, {
-        deviceName: navigator.userAgent || "Web",
-      });
-
-      toast.success(
-        data?.message || t("googleLoginSuccess", { defaultValue: "Signed in successfully." }),
-        { id: toastId },
-      );
-
-      navigate(base, { replace: true });
-    } catch (err) {
-      toast.error(err?.message || "Google login failed", { id: toastId });
-    } finally {
-      setNativeLoginPending(false);
     }
   };
 
@@ -384,11 +238,7 @@ const LoginPage = () => {
           {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
         </div>
 
-        <div className="text-start text-sm text-blue-500">
-          <a href="#" onClick={handleForgotClick}>
-            {t("forgotPassword")}
-          </a>
-        </div>
+   
 
         <button
           type="submit"
@@ -397,58 +247,6 @@ const LoginPage = () => {
         >
           {loading ? t("loggingIn") : t("login")}
         </button>
-
-        <div className="text-center text-sm">
-          <span>{t("noAccount")}</span>
-          <Link to={`${base}/register`} className="text-blue-500">
-            {t("createAccount")}
-          </Link>
-        </div>
-
-        <div className="text-center text-gray-400">{t("or")}</div>
-
-        {/* Social icons */}
-        <div className="flex justify-center gap-4 text-2xl text-gray-700">
-          {/* <img src="/assets/icons/x.svg" alt="x" className="w-8 h-8 opacity-80" />
-          <img src="/assets/icons/apple.svg" alt="apple" className="w-8 h-8 opacity-80" />
-          <img src="/assets/icons/linkedin.svg" alt="linkedin" className="w-8 h-8 opacity-80" /> */}
-
-          {/* ✅ Google icon (same UI) + invisible GoogleLogin overlay */}
-          {!isNativeApp && (
-            <div
-              className={`relative w-8 h-8 opacity-80 ${
-                loading || googleLoading ? "pointer-events-none opacity-60" : ""
-              }`}
-              title="Google"
-            >
-              {" "}
-              <>
-                <img src="/assets/icons/google.svg" alt="google" className="w-8 h-8" />
-                <div className="absolute inset-0 opacity-0">
-                  <GoogleLogin
-                    onSuccess={(credRes) => handleGoogleCredential(credRes?.credential)}
-                    onError={() =>
-                      toast.error(t("googleLoginFailed", { defaultValue: "Google login failed" }))
-                    }
-                    // optional tweaks (safe)
-                    useOneTap={false}
-                  />
-                </div>
-              </>
-            </div>
-          )}
-
-          {isNativeApp && (
-            <button
-              type="button"
-              onClick={handleNativeGoogleLogin}
-              disabled={nativeLoginPending || googleLoading || loading}
-              className="text-sm text-blue-600 underline underline-offset-2 transition disabled:opacity-60 focus:outline-none"
-            >
-              <img src="/assets/icons/google.svg" alt="google" className="w-8 h-8" />
-            </button>
-          )}
-        </div>
 
         {/* Biometric */}
         {biometricAvailable ? (
