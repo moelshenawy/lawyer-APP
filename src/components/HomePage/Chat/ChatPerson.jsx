@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import stylesEmpty from "@/components/OrdersPage/OrderDetails/RequestedInformationSection.module.scss";
+import PageHeader from "@/components/common/PageHeader";
 
 // Utility for formatted time + date
 const formatDateTime = () => {
@@ -12,6 +15,7 @@ const formatDateTime = () => {
 const ChatPerson = () => {
   const navigate = useNavigate();
   const { lng } = useParams();
+  const { t } = useTranslation("chatMobile");
 
   const [messages, setMessages] = useState([
     {
@@ -53,13 +57,18 @@ const ChatPerson = () => {
   };
 
   return (
+
     <>
-            {/* <div className={stylesEmpty.empty}>
-              <div className={stylesEmpty.emptyContent}>
-                <p className={stylesEmpty.emptyTitle}>{t("documents.emptyTitle")}</p>
-                <p className={stylesEmpty.emptySubtitle}>{t("documents.emptySubtitle")}</p>
-              </div>
-            </div> */}
+      <PageHeader title={t("chat")} />
+    
+    <div className="flex items-center justify-center min-h-[80vh]">
+      <div className={stylesEmpty.empty}>
+        <div className={stylesEmpty.emptyContent}>
+          <p className={stylesEmpty.emptyTitle}>{t("notAvailable")}</p>
+          <p className={stylesEmpty.emptySubtitle}>{t("notAvailableSub")}</p>
+        </div>
+      </div>
+    </div>
     </>
     // <div className={`${styles.page}`} dir="rtl">
 

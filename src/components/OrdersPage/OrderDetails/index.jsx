@@ -24,6 +24,7 @@ import stylesEmpty from "./RequestedInformationSection.module.scss";
 // ✅ NEW: task comments section
 import TaskUpdatesSection from "./TaskUpdatesSection";
 import CalendarCard from "@/components/AppoinmentsPage/Calendar/CalendarCard";
+import i18n from "@/i18n";
 
 const getOrderDetailsPath = (id, viewType) => {
   if (viewType === "task") return `/user/tasks/${id}`;
@@ -140,12 +141,6 @@ const fetchOrder = useCallback(
   console.log(documents,"documents")
 
   // ✅ case-only collections
-  const appointments = orderData?.appointments || [];
-  const payments = orderData?.payments || [];
-  const approvals = orderData?.approvals || [];
-  const hearings = orderData?.hearings || [];
-  const timeline = orderData?.timeline || [];
-  const requested_information = orderData?.requested_information || [];
   const calendarData = orderData?.calendar || [];
   const infoData = orderData?.info || [];
   const isCase = orderData?.info?.type === "case";
@@ -210,7 +205,7 @@ const fetchOrder = useCallback(
                 freeMode
                 slidesPerView="auto"
                 spaceBetween={8}
-                dir="rtl"
+                dir={i18n.dir()}
                 className={styles.tabs}
               >
                 {TAB_ITEMS.map((tab) => (
@@ -300,7 +295,7 @@ const fetchOrder = useCallback(
 
                 {/* ✅ TASK CONTENT (no tabs) */}
                 {isTaskView ? (
-<TaskUpdatesSection taskId={id} initialUpdates={updates} loading={loading} />
+                <TaskUpdatesSection taskId={id} initialUpdates={updates} loading={loading} />
                 ) : null}
               </>
             )}

@@ -16,6 +16,27 @@
   "errorDetailsPrefix": "التفاصيل:",
   "retry": "إعادة المحاولة",
   "backToAccount": "العودة للحساب",
+
+  "requestedInfo": {
+    "cards": {
+      "client": "معلومات العميل",
+      "assignee": "المسؤولين"
+    },
+    "fields": {
+      "number": "رقم الطلب",
+      "title": "العنوان",
+      "case_type_name": "نوع الخدمة",
+      "status_label": "الحالة",
+      "court_name": "المحكمة",
+      "case_reference_no": "رقم المرجع",
+      "created_at": "تاريخ الإنشاء",
+      "updated_at": "تاريخ التحديث",
+      "name": "الاسم",
+      "phone": "رقم الهاتف",
+      "email": "البريد الإلكتروني"
+    }
+  },
+
   "approvals": {
     "selectDecision": "يرجى اختيار القرار.",
     "loginFirst": "يرجى تسجيل الدخول أولاً.",
@@ -67,12 +88,7 @@
     "uploadButton": "رفع المستند",
     "uploading": "جاري الرفع..."
   },
-  "requestedInfo": {
-    "emptyTitle": "لا توجد معلومات مطلوبة منك حالياً",
-    "emptySubtitle": "عندما نحتاج منك معلومات هامة سوف تظهر هنا",
-    "send": "إرسال",
-    "sending": "جارى الإرسال..."
-  },
+
   "updates": {
     "title": "التحديثات",
     "viewAttachment": "عرض المرفق",

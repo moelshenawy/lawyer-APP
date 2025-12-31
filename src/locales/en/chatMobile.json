@@ -24,5 +24,7 @@
   "seoTitle": "Chat | Lawyer",
   "seoDescription": "Chat with your lawyer.",
   "aiSeoTitle": "AI Assistant | Lawyer",
-  "aiSeoDescription": "Intelligent legal assistant."
+  "aiSeoDescription": "Intelligent legal assistant.",
+  "notAvailable": "Chat is not available right now",
+  "notAvailableSub": "Please try again later or contact support"
 }

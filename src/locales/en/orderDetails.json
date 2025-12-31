@@ -14,6 +14,25 @@
   "errorDetailsPrefix": "Details:",
   "retry": "Retry",
   "close": "Close",
+  "requestedInfo": {
+    "cards": {
+      "client": "Client information",
+      "assignee": "Assigned staff"
+    },
+    "fields": {
+      "number": "Order number",
+      "title": "Title",
+      "case_type_name": "Service type",
+      "status_label": "Status",
+      "court_name": "Court",
+      "case_reference_no": "Reference number",
+      "created_at": "Created at",
+      "updated_at": "Updated at",
+      "name": "Name",
+      "phone": "Phone",
+      "email": "Email"
+    }
+  },
 
   "backToAccount": "Back to account",
   "approvals": {
@@ -67,12 +86,7 @@
     "uploadButton": "Upload document",
     "uploading": "Uploading..."
   },
-  "requestedInfo": {
-    "emptyTitle": "No information available right now",
-    "emptySubtitle": "Information will appear here when available",
-    "send": "Send",
-    "sending": "Sending..."
-  },
+
   "updates": {
     "title": "Updates",
     "viewAttachment": "View Attachment",

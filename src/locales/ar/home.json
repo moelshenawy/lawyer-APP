@@ -34,5 +34,103 @@
   "yes": "نعم",
   "no": "لا",
   "seoTitle": "الرئيسية | المحامي",
-  "seoDescription": "صفحة المحامي الرئيسية للعملاء."
+  "seoDescription": "صفحة المحامي الرئيسية للعملاء.",
+  "attendance": {
+    "statusPending": "حضور اليوم",
+    "statusActive": "أنت مسجل حضور",
+    "statusDone": "اكتمل تسجيل اليوم",
+    "subPending": "يرجى تسجيل حضورك عند الوصول",
+    "subSince": "منذ {{time}}",
+    "subWork": "إجمالي العمل: {{minutes}} دقيقة",
+    "actionClockIn": "تسجيل الحضور",
+    "actionClockOut": "تسجيل الانصراف",
+    "actionDetails": "التفاصيل",
+    "confirmClockInTitle": "تسجيل الحضور",
+    "confirmClockOutTitle": "تسجيل الانصراف",
+    "confirmClockInDesc": "هل أنت متأكد أنك تريد تسجيل حضورك؟",
+    "confirmClockOutDesc": "هل أنت متأكد أنك تريد تسجيل انصرافك؟",
+    "successClockInTitle": "تم تسجيل الحضور بنجاح",
+    "successClockOutTitle": "تم تسجيل الانصراف بنجاح",
+    "detailsTitle": "تفاصيل الحضور",
+    "bulletWorkTime": "وقت العمل: {{minutes}} دقيقة",
+    "bulletMethod": "طريقة {{type}}: {{method}}",
+    "bulletTime": "وقت {{type}}: {{time}} ({{since}})",
+    "typeIn": "الحضور",
+    "typeOut": "الانصراف",
+    "methodDefault": "تلقائي",
+    "btnOk": "حسناً",
+    "btnClose": "إغلاق",
+    "btnYes": "نعم",
+    "btnNo": "لا"
+  },
+
+  "attendance": {
+    "status": {
+      "pending": "حضور اليوم",
+      "active": "أنت مسجل حضور",
+      "done": "اكتمل تسجيل اليوم"
+    },
+    "sub": {
+      "pending": "يرجى تسجيل حضورك عند الوصول",
+      "active": "منذ {{since}}",
+      "done": "إجمالي العمل: {{minutes}} دقيقة"
+    },
+    "action": {
+      "clockIn": "تسجيل الحضور",
+      "clockOut": "تسجيل الانصراف",
+      "details": "التفاصيل"
+    },
+    "toast": {
+      "success": "تم التسجيل بنجاح",
+      "fail": "فشل في تسجيل الحضور",
+      "error": "حدث خطأ أثناء التسجيل"
+    },
+    "method": {
+      "auto": "تلقائي"
+    },
+    "popup": {
+      "ok": "حسناً",
+      "close": "إغلاق",
+      "confirm": {
+        "titleClockIn": "تسجيل الحضور",
+        "titleClockOut": "تسجيل الانصراف",
+        "descClockIn": "هل أنت متأكد أنك تريد تسجيل حضورك؟",
+        "descClockOut": "هل أنت متأكد أنك تريد تسجيل انصرافك؟",
+        "yes": "نعم",
+        "no": "لا"
+      },
+      "clockIn": {
+        "title": "تم تسجيل الحضور بنجاح"
+      },
+      "clockOut": {
+        "title": "تم تسجيل الانصراف بنجاح",
+        "bullets": {
+          "workTime": "وقت العمل: {{minutes}} دقيقة",
+          "method": "طريقة الانصراف: {{method}}",
+          "time": "وقت الانصراف: {{time}}",
+          "since": "منذ: {{since}}"
+        }
+      },
+      "details": {
+        "title": "تفاصيل الحضور",
+        "bullets": {
+          "checkIn": "وقت الحضور: {{time}} ({{since}})",
+          "checkOut": "وقت الانصراف: {{time}} ({{since}})",
+          "total": "إجمالي العمل: {{minutes}} دقيقة",
+          "checkInMethod": "طريقة الحضور: {{method}}",
+          "checkOutMethod": "طريقة الانصراف: {{method}}"
+        }
+      }
+    }
+  },
+
+
+  "notifications": {
+    "title": "اشعارات",
+    "fallbackTitle": "إشعار",
+    "emptyTitle": "لا توجد إشعارات",
+    "emptyDesc": "لا يوجد إشعارات جديدة حالياً."
+  }
+
+
 }

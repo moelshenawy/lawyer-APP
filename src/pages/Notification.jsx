@@ -6,6 +6,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import styles from "./Notification.module.scss";
 import { getNotifications } from "@/api/notifications";
+import i18n from "@/i18n";
+import PageHeader from "@/components/common/PageHeader";
 
 const formatDateTime = (value) => {
   if (!value) return "";
@@ -96,26 +98,17 @@ const NotificationPage = () => {
   const goBack = () => navigate(base);
 
   return (
-    <section className={styles.page} dir="rtl">
+    <section className={styles.page} dir={i18n.dir()}>
       <HeadProvider>
         <Title>{t("seoTitle", "الإشعارات | المحامي")}</Title>
         <Meta name="description" content={t("seoDescription", "Notifications page")} />
       </HeadProvider>
 
       <div className={`${styles.shell} container`}>
-        <div className={styles.headerRow}>
-          <div className={styles.titleRow}>
-            <button
-              type="button"
-              className={styles.arrowBtn}
-              onClick={goBack}
-              aria-label={t("backAria")}
-            >
-              <IoIosArrowForward size={18} />
-            </button>
-            <h1>{t("title")}</h1>
-          </div>
-        </div>
+ 
+
+      <PageHeader title={t("title")} />
+
 
         {/* {loading && <p className={styles.statusText}>{t("loading")}</p>} */}
         {error && !loading && <p className={styles.error}>{error}</p>}

@@ -34,5 +34,72 @@
   "yes": "Yes",
   "no": "No",
   "seoTitle": "Home | Lawyer",
-  "seoDescription": "Lawyer client home page."
+  "seoDescription": "Lawyer client home page.",
+  "attendance": {
+    "status": {
+      "pending": "Today's attendance",
+      "active": "You are clocked in",
+      "done": "Attendance completed"
+    },
+    "sub": {
+      "pending": "Please clock in when you arrive",
+      "active": "Since {{since}}",
+      "done": "Total work: {{minutes}} min"
+    },
+    "action": {
+      "clockIn": "Clock in",
+      "clockOut": "Clock out",
+      "details": "Details"
+    },
+    "toast": {
+      "success": "Recorded successfully",
+      "fail": "Failed to record attendance",
+      "error": "An error occurred while recording"
+    },
+    "method": {
+      "auto": "Automatic"
+    },
+    "popup": {
+      "ok": "OK",
+      "close": "Close",
+      "confirm": {
+        "titleClockIn": "Clock in",
+        "titleClockOut": "Clock out",
+        "descClockIn": "Are you sure you want to clock in?",
+        "descClockOut": "Are you sure you want to clock out?",
+        "yes": "Yes",
+        "no": "No"
+      },
+      "clockIn": {
+        "title": "Clock-in recorded successfully"
+      },
+      "clockOut": {
+        "title": "Clock-out recorded successfully",
+        "bullets": {
+          "workTime": "Work time: {{minutes}} min",
+          "method": "Check-out method: {{method}}",
+          "time": "Check-out time: {{time}}",
+          "since": "Since: {{since}}"
+        }
+      },
+      "details": {
+        "title": "Attendance details",
+        "bullets": {
+          "checkIn": "Check-in: {{time}} ({{since}})",
+          "checkOut": "Check-out: {{time}} ({{since}})",
+          "total": "Total work: {{minutes}} min",
+          "checkInMethod": "Check-in method: {{method}}",
+          "checkOutMethod": "Check-out method: {{method}}"
+        }
+      }
+    }
+  },
+
+  "notifications": {
+    "title": "Notifications",
+    "fallbackTitle": "Notification",
+    "emptyTitle": "No notifications",
+    "emptyDesc": "There are no new notifications right now."
+  }
+
 }
