@@ -20,10 +20,7 @@ const normalizeApiBase = (url) => {
   return cleaned.endsWith("/api") ? cleaned : `${cleaned}/api`;
 };
 
-const ORDERS_API_URL = `${normalizeApiBase(RAW_BASE)}/user/orders`;
-
-
-
+const ORDERS_API_URL = `${normalizeApiBase(RAW_BASE)}/user/orders?page=1&per_page=100&type=&status=&q=`;
 
 const formatDate = (value) => {
   if (!value) return "";
@@ -63,8 +60,6 @@ const Cases = () => {
     ],
     [t],
   );
-
-
 
   const FILTER_TABS = useMemo(
     () => [
@@ -174,7 +169,6 @@ const Cases = () => {
                 </Link>
               </SwiperSlide>
             ))}
-
           </Swiper>
         </div>
 
