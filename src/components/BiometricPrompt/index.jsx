@@ -15,12 +15,20 @@ const persistBiometricToken = (token) => {
   sessionStorage.setItem("hypered_biometric_token", token);
 };
 
-const saveBiometric = (token) => {
-  if (!token) {
-    return null;
-  }
+// const saveBiometric = (token) => {
+//   if (!token) {
+//     return null;
+//   }
 
-  return Hypered.saveBiometricToken(token);
+//   return Hypered.saveBiometricToken(token);
+// };
+
+const saveBiometric = (token) => {
+  if (!token) return null;
+
+  return Hypered.saveBiometricToken(token).then((res) => {
+    return res || token;
+  });
 };
 
 const BiometricPrompt = ({ onClose, onActivate }) => {
