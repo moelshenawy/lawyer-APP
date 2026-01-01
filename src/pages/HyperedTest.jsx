@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Hypered from "@/utils/hyperedBridge";
 
 export default function HyperedTest() {
   const [logs, setLogs] = useState("");
@@ -6,6 +7,47 @@ export default function HyperedTest() {
   function log(msg) {
     setLogs((prev) => prev + `[${new Date().toLocaleTimeString()}] ${msg}\n`);
   }
+
+  // Test the exact same logic as BiometricPrompt
+  const handleBiometricPromptTest = () => {
+    log("=== BIOMETRIC PROMPT TEST ===");
+
+    // Get the exact token that BiometricPrompt would use
+    const token = localStorage.getItem("access_token");
+    log(`Token from localStorage: ${token ? "EXISTS" : "NOT FOUND"}`);
+    log(`Token length: ${token?.length || 0}`);
+
+    if (!token) {
+      log("ERROR: No access_token found in localStorage");
+      return;
+    }
+
+    // Test HyperedChannel availability
+    log(`HyperedChannel available: ${!!window.HyperedChannel}`);
+    log(`postMessage available: ${typeof window.HyperedChannel?.postMessage}`);
+
+    // Call the exact same function as BiometricPrompt
+    log("Calling Hypered.saveBiometricToken...");
+    Hypered.saveBiometricToken(token)
+      .then((nativeToken) => {
+        log(`SUCCESS: Native token received: ${nativeToken}`);
+        log(`Native token type: ${typeof nativeToken}`);
+        log(`Native token length: ${nativeToken?.length || 0}`);
+
+        if (!nativeToken) {
+          log("ERROR: Native token is null/undefined - user cancelled or failed");
+        } else {
+          log("SUCCESS: Biometric activation completed");
+        }
+      })
+      .catch((err) => {
+        log(`CATCH BLOCK ERROR: ${err}`);
+        log(`Error message: ${err.message}`);
+        log(`Error name: ${err.name}`);
+        log(`Error stack: ${err.stack}`);
+        log(`Error toString: ${err.toString()}`);
+      });
+  };
 
   const handleIsInApp = () => {
     Hypered.isInApp()
@@ -80,6 +122,9 @@ export default function HyperedTest() {
       <a href="/ar">Home Page</a>
       <h1>Hypered Bridge Tester</h1>
       <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+        <button className={"bg-primary text-white"} onClick={handleBiometricPromptTest}>
+          **** Test BiometricPrompt Logic ***
+        </button>
         <button className={"bg-primary text-white"} onClick={handleToast}>
           Show toast using Hypered.toast()
         </button>
@@ -92,9 +137,9 @@ export default function HyperedTest() {
         <button className={"bg-primary text-white"} onClick={handleLoadBiometric}>
           Load biometric token using Hypered.loadBiometricToken()
         </button>
-        <button className={"bg-primary text-white"} onClick={handleGoogleLogin}>
+        {/* <button className={"bg-primary text-white"} onClick={handleGoogleLogin}>
           Login with Google using Hypered.loginWithGoogle()
-        </button>
+        </button> */}
         {/* <button  className={'bg-primary text-white'} onClick={handleNotify}>
           Send notification using Hypered.notify()
         </button> */}
