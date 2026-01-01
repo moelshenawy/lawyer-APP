@@ -13,8 +13,7 @@ const PRIORITY_SCORE = {
 };
 
 // supports different api keys just in case (priority / level)
-const getTaskPriority = (task) =>
-  String(task?.priority ?? task?.level ?? "normal").toLowerCase();
+const getTaskPriority = (task) => String(task?.priority ?? task?.level ?? "normal").toLowerCase();
 
 const sortByPriority = (list) =>
   list

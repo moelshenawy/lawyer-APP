@@ -4,10 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import styles from "./index.module.scss";
 
-const log = (message) => {
-  console.log(message);
-};
-
 const getStoredToken = () => {
   if (typeof window === "undefined") return null;
   return localStorage.getItem("access_token");
@@ -30,7 +26,7 @@ const saveBiometric = (token) => {
 const BiometricPrompt = ({ onClose, onActivate }) => {
   const navigate = useNavigate();
   const { lng } = useParams();
-  const basePath = useMemo(() => `/${lng || "ar"}, [lng]`);
+  const basePath = useMemo(() => `/${lng || "ar"}`, [lng]);
 
   const [error, setError] = useState("");
   const [activated, setActivated] = useState(false);
@@ -53,26 +49,64 @@ const BiometricPrompt = ({ onClose, onActivate }) => {
     setError("");
     const token = getStoredToken();
 
+    console.log("=== BIOMETRIC ACTIVATION START ===");
+    console.log("Token exists:", !!token);
+    console.log("Token length:", token?.length);
+    console.log("HyperedChannel available:", !!window.HyperedChannel);
+    console.log("postMessage available:", typeof window.HyperedChannel?.postMessage);
+
     if (!token) {
+      console.log("ERROR: No token found");
       setError("لا يوجد رمز مستخدم لحفظه.");
       return;
     }
 
+    // Check if HyperedChannel is available
+    if (!window.HyperedChannel || typeof window.HyperedChannel.postMessage !== "function") {
+      console.log("HyperedChannel not available, using fallback");
+      // Fallback: just mark as activated without native biometric
+      persistBiometricToken(token);
+      setActivated(true);
+      setBiometricActivated(true);
+      sessionStorage.setItem("biometric_prompt_handled", "true");
+      onActivate?.();
+      toast.success("تم تفعيل البصمة (وضع التطوير)");
+
+      setTimeout(() => {
+        if (typeof window !== "undefined") {
+          window.location.replace(basePath);
+        } else {
+          navigate(basePath, { replace: true });
+        }
+      }, 2000);
+      return;
+    }
+
+    console.log("Calling saveBiometric with token...");
     const savePromise = saveBiometric(token);
     if (!savePromise) {
+      console.log("ERROR: saveBiometric returned null/undefined");
       setError("لا يوجد رمز مستخدم لحفظه.");
       return;
     }
 
+    console.log("saveBiometric promise created, waiting for response...");
     savePromise
       .then((nativeToken) => {
-        // ❌ CANCEL or FAILED → nativeToken = null
+        console.log("=== BIOMETRIC RESPONSE RECEIVED ===");
+        console.log("Native token:", nativeToken);
+        console.log("Native token type:", typeof nativeToken);
+        console.log("Native token length:", nativeToken?.length);
+
+        // If nativeToken is null, it could mean user cancelled or biometric failed
         if (!nativeToken) {
-          setError("تعذر تفعيل البصمة. حاول مرة أخرى.");
-          return; // ⛔ STOP HERE (no redirect, no persist)
+          console.log("ERROR: Native token is null/undefined");
+          setError("تم إلغاء تفعيل البصمة أو فشل التفعيل. حاول مرة أخرى.");
+          return;
         }
 
-        // ✔ SUCCESS
+        // SUCCESS
+        console.log("SUCCESS: Biometric activated");
         const resolvedToken = nativeToken;
         persistBiometricToken(resolvedToken);
 
@@ -81,7 +115,7 @@ const BiometricPrompt = ({ onClose, onActivate }) => {
         sessionStorage.setItem("biometric_prompt_handled", "true");
 
         onActivate?.();
-        toast.success(`تم تفعيل البصمة `);
+        toast.success(`تم تفعيل البصمة`);
 
         setTimeout(() => {
           if (typeof window !== "undefined") {
@@ -92,36 +126,16 @@ const BiometricPrompt = ({ onClose, onActivate }) => {
         }, 2000);
       })
       .catch((err) => {
-        log(err);
+        console.log("=== BIOMETRIC CATCH BLOCK ===");
+        console.error("Biometric activation error:", err);
+        console.error("Error details:", {
+          message: err.message,
+          stack: err.stack,
+          name: err.name,
+          toString: err.toString(),
+        });
         setError("تعذر تفعيل البصمة. حاول مرة أخرى.");
       });
-
-    // .then((nativeToken) => {
-    //   const resolvedToken = nativeToken || token;
-
-    //   persistBiometricToken(resolvedToken);
-
-    //   // --- SET FLAG IN LOCALSTORAGE ---
-    //   setBiometricActivated(true);
-
-    //   // Mark handled so prompt doesn't reappear
-    //   sessionStorage.setItem("biometric_prompt_handled", "true");
-
-    //   onActivate?.();
-    //   toast.success(تم تفعيل البصمة: ${resolvedToken});
-
-    //   setTimeout(() => {
-    //     if (typeof window !== "undefined") {
-    //       window.location.replace(basePath);
-    //     } else {
-    //       navigate(basePath, { replace: true });
-    //     }
-    //   }, 1000);
-    // })
-    // .catch((err) => {
-    //   log(err);
-    //   setError("تعذر تفعيل البصمة. حاول مرة أخرى.");
-    // });
   };
 
   if (activated) {
@@ -177,99 +191,3 @@ const BiometricPrompt = ({ onClose, onActivate }) => {
 };
 
 export default BiometricPrompt;
-
-// const BiometricPrompt = ({ onClose, onActivate }) => {
-//   const navigate = useNavigate();
-//   const { lng } = useParams();
-//   const basePath = useMemo(() => `/${lng || "ar"}`, [lng]);
-//   const [activated, setActivated] = useState(false);
-//   const [error, setError] = useState("");
-//   const [lastToken, setLastToken] = useState("");
-
-//   const handleActivate = () => {
-//     setError("");
-//     const token = getStoredToken();
-
-//     if (!token) {
-//       setError("لا يوجد رمز مستخدم لحفظه.");
-//       return;
-//     }
-
-//     const savePromise = saveBiometric(token);
-//     if (!savePromise) {
-//       setError("لا يوجد رمز مستخدم لحفظه.");
-//       return;
-//     }
-
-//     savePromise
-//       .then((nativeToken) => {
-//         const resolvedToken = nativeToken || token;
-//         persistBiometricToken(resolvedToken);
-//         setLastToken(resolvedToken);
-//         setActivated(true);
-//         // Mark handled so prompt doesn't reappear
-//         sessionStorage.setItem("biometric_prompt_handled", "true");
-//         onActivate?.();
-//         toast.success(`تم تفعيل البصمة: ${resolvedToken}`);
-//         // Fallback redirect for WebView environments
-//         setTimeout(() => {
-//           if (typeof window !== "undefined") {
-//             window.location.replace(basePath);
-//           } else {
-//             navigate(basePath, { replace: true });
-//           }
-//         }, 1000);
-//       })
-//       .catch((err) => {
-//         log(err);
-//         setError("تعذر تفعيل البصمة. حاول مرة أخرى.");
-//       });
-//   };
-
-//   if (activated) {
-//     return (
-//       <div className={styles.overlay} dir="rtl">
-//         <div className={styles.success}>
-//           <img src="/assets/icons/icon.gif" alt="biometric enabled" className={styles.successGif} />
-//           <p className={styles.successText}>تم تفعيل بصمتك بنجاح</p>
-//           {lastToken ? <p className={styles.successToken}>Token: {lastToken}</p> : null}
-//         </div>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div className={styles.overlay} dir="rtl">
-//       <div className={styles.card}>
-//         <div className={styles.fingerprintBox}>
-//           <img src="/assets/icons/finger_print.png" alt="fingerprint" />
-//         </div>
-
-//         <h2 className={styles.title}>احمِ حسابك وادخل أسرع بتفعيل تسجيل الدخول بالبصمة</h2>
-//         <p className={styles.subtitle}>
-//           تفعيل البصمة يحافظ على أمان حسابك ويختصر وقت الدخول لك فقط على هذا الجهاز.
-//         </p>
-
-//         <ul className={styles.list}>
-//           <li>دخول أسرع بدون كتابة كلمة المرور في كل مرة</li>
-//           <li>حماية إضافية لأن البصمة تعمل على جهازك فقط</li>
-//           <li>يمكنك إيقافها لاحقًا من إعدادات جهازك</li>
-//         </ul>
-
-//         <div className={styles.actions}>
-//           <button type="button" className={styles.primaryBtn} onClick={handleActivate}>
-//             تفعيل البصمة
-//           </button>
-//           <button type="button" className={styles.secondaryBtn} onClick={onClose}>
-//             إلغاء
-//           </button>
-//         </div>
-//         {error ? (
-//           <p style={{ color: "#ef4444", textAlign: "center", marginTop: "12px" }}>{error}</p>
-//         ) : null}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default BiometricPrompt;
